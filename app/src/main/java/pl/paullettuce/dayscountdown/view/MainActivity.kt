@@ -1,7 +1,8 @@
-package pl.paullettuce.dayscountdown
+package pl.paullettuce.dayscountdown.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import pl.paullettuce.dayscountdown.R
 
 class MainActivity : AppCompatActivity() {
 
