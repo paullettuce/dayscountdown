@@ -15,8 +15,7 @@ class DateTimePicker(
     fun pickDateAndTime(
         initialDatetimeMillis: Long
     ) {
-        pickTime(initialDatetimeMillis)
-//        pickDate(initialDatetimeMillis, false)
+        pickDate(initialDatetimeMillis, true)
     }
 
     fun pickTime(
@@ -73,13 +72,15 @@ class DateTimePicker(
         initialDay: Int,
         datePickedCallback: (year: Int, month: Int, day: Int) -> Unit
     ) {
-        DatePickerDialog(
-            context!!,
+        val datePickerDialog = DatePickerDialog(
+            context,
             { view, year, month, dayOfMonth ->
                 datePickedCallback(year, month, dayOfMonth)
             },
             initialYear, initialMonth, initialDay
-        ).show()
+        )
+        datePickerDialog.datePicker.minDate = nowInMillis()
+        datePickerDialog.show()
     }
 
     private fun showTimePicker(
@@ -87,17 +88,20 @@ class DateTimePicker(
         initialMinute: Int,
         timePickedCallback: (hour: Int, minute: Int) -> Unit
     ) {
-        TimePickerDialog(
+        val timePickerDialog = TimePickerDialog(
             context,
             { view, hourOfDay, minute ->
                 timePickedCallback(hourOfDay, minute)
             },
             initialHour, initialMinute,
             true
-        ).show()
+        )
+        timePickerDialog.show()
     }
 
     private fun pickingFinished() {
         pickingFinishedCallback(pickedDate.timeInMillis)
     }
+
+    private fun nowInMillis() = Calendar.getInstance().timeInMillis
 }

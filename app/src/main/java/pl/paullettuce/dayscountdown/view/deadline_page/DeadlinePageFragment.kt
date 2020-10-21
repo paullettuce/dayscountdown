@@ -47,8 +47,8 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
 
     override fun openDeadlinePickerWithStartDate(initialPickerDatetimeMillis: Long) {
         context?.let {
-            val dateTimePicker = DateTimePicker(it) {
-                onDatePicked(it)
+            val dateTimePicker = DateTimePicker(it) { pickedDatetime ->
+                onDatePicked(pickedDatetime)
             }
 
             dateTimePicker.pickDateAndTime(initialPickerDatetimeMillis)

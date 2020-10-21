@@ -1,53 +1,38 @@
 package pl.paullettuce.dayscountdown.presenter
 
-import android.annotation.SuppressLint
+import pl.paullettuce.dayscountdown.commons.TimeFormatter
 import pl.paullettuce.dayscountdown.model.Deadline
 import pl.paullettuce.dayscountdown.view.deadline_page.DeadlinePageView
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.util.*
 
 class DeadlinePagePresenter(
     private val view: DeadlinePageView
 ) {
-
     private val deadline = Deadline()
 
     fun initiate() {
-        val initialDatetimeMillis = if (deadline.getDeadlineDatetime() > 0) {
-            deadline.getDeadlineDatetime()
-        } else {
-            nowDatetimeInMillis()
-        }
-
-        val displayedDatetime = parseToString(initialDatetimeMillis)
-        view.updateDeadlineDate(displayedDatetime)
+        val initialDatetimeMillis = getDeadlineDatetimeOrNowIfEmpty()
+        val formattedDatetime = TimeFormatter.formatMillis(initialDatetimeMillis)
+        view.updateDeadlineDate(formattedDatetime)
     }
 
     fun openDeadlineDatetimePicker() {
-        val initialDatetimeMillis = if (deadline.getDeadlineDatetime() > 0) {
-            deadline.getDeadlineDatetime()
-        } else {
-            nowDatetimeInMillis()
-        }
-
+        val initialDatetimeMillis = getDeadlineDatetimeOrNowIfEmpty()
         view.openDeadlinePickerWithStartDate(initialDatetimeMillis)
     }
 
     fun updateDeadlineDatetime(datetimeMillis: Long) {
         deadline.setDeadlineDatetime(datetimeMillis)
 
-        val displayedDatetime = parseToString(datetimeMillis)
-        view.updateDeadlineDate(displayedDatetime)
+        val formattedDatetime = deadline.toString()
+        view.updateDeadlineDate(formattedDatetime)
     }
 
-
-    @Deprecated("Remove from presenter")
-    @SuppressLint("NewApi")
-    private fun parseToString(datetime: Long): String {
-        val date = LocalDateTime.ofEpochSecond(datetime/1000, 0, ZoneOffset.ofHours(2))
-        return date.toString()
+    private fun getDeadlineDatetimeOrNowIfEmpty(): Long {
+        return if (deadline.getDeadlineDatetime() > 0) {
+            deadline.getDeadlineDatetime()
+        } else {
+            Calendar.getInstance().timeInMillis
+        }
     }
-
-    private fun nowDatetimeInMillis() = Calendar.getInstance().timeInMillis
 }
