@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">Days Countdown</string>
-    <string name="days_to">Days left to</string>
+
+    <string name="days_to">Deadline at</string>
+    <string name="notification_checkbox_text">Notification everyday at</string>
+    <string name="things_to_do">Things to do</string>
+
+    <string name="days_hours">%1$d days %2$d hours</string>
+    <string name="hours_minutes">%1$d hours %2$d minutes</string>
+    <string name="minutes">%1$d minutes</string>
+
     <string name="mock_picked_datetime">11-07-2020 12:30</string>
     <string name="mock_days">23</string>
-    <string name="notification_checkbox_text">Notification everyday at</string>
     <string name="mock_picked_time">8:00</string>
-    <string name="things_to_do">Things to do</string>
 </resources>

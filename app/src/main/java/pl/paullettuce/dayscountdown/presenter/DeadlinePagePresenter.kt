@@ -1,9 +1,9 @@
 package pl.paullettuce.dayscountdown.presenter
 
 import pl.paullettuce.dayscountdown.commons.TimeFormatter
+import pl.paullettuce.dayscountdown.commons.TimeUtil
 import pl.paullettuce.dayscountdown.model.Deadline
 import pl.paullettuce.dayscountdown.view.deadline_page.DeadlinePageView
-import java.util.*
 
 class DeadlinePagePresenter(
     private val view: DeadlinePageView
@@ -14,6 +14,7 @@ class DeadlinePagePresenter(
         val initialDatetimeMillis = getDeadlineDatetimeOrNowIfEmpty()
         val formattedDatetime = TimeFormatter.formatMillis(initialDatetimeMillis)
         view.updateDeadlineDate(formattedDatetime)
+        updateDaysLeft()
     }
 
     fun openDeadlineDatetimePicker() {
@@ -26,13 +27,22 @@ class DeadlinePagePresenter(
 
         val formattedDatetime = deadline.toString()
         view.updateDeadlineDate(formattedDatetime)
+
+        updateDaysLeft()
     }
 
     private fun getDeadlineDatetimeOrNowIfEmpty(): Long {
         return if (deadline.getDeadlineDatetime() > 0) {
             deadline.getDeadlineDatetime()
         } else {
-            Calendar.getInstance().timeInMillis
+            TimeUtil.nowMillis()
         }
+    }
+
+    private fun updateDaysLeft() {
+        val deadlineDatetime = deadline.getDeadlineDatetime()
+        val timeLeft = TimeUtil.timeBetween(deadlineDatetime, TimeUtil.nowMillis())
+
+        view.updateTimeLeft(timeLeft.days, timeLeft.hours, timeLeft.minutes)
     }
 }

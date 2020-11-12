@@ -37,8 +37,19 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
         dateTimePickBtn.setText(friendlyDatetime)
     }
 
-    override fun updateDaysLeft(daysLeft: Int) {
-        TODO("Not yet implemented")
+    //TODO(move logic to presenter)
+    override fun updateTimeLeft(days: Long, hours: Long, minutes: Long) {
+        when {
+            days > 0 -> {
+                showDaysAndHours(days, hours)
+            }
+            hours > 0 -> {
+                showHoursAndMinutes(hours, minutes)
+            }
+            else -> {
+                showMinutes(minutes)
+            }
+        }
     }
 
     override fun updateNotificationTime(time: String) {
@@ -57,6 +68,21 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
 
     private fun onDatePicked(datetimeTimestamp: Long) {
         presenter.updateDeadlineDatetime(datetimeTimestamp)
+    }
+
+    private fun showDaysAndHours(days: Long, hours: Long) {
+        val text = getString(R.string.days_hours, days, hours)
+        timeLeftTV.setText(text)
+    }
+
+    private fun showHoursAndMinutes(hours: Long, minutes: Long) {
+        val text = getString(R.string.hours_minutes, hours, minutes)
+        timeLeftTV.setText(text)
+    }
+
+    private fun showMinutes(minutes: Long) {
+        val text = getString(R.string.minutes, minutes)
+        timeLeftTV.setText(text)
     }
 
 }

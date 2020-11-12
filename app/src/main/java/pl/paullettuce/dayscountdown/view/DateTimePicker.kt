@@ -3,6 +3,7 @@ package pl.paullettuce.dayscountdown.view
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import pl.paullettuce.dayscountdown.commons.TimeUtil
 import java.util.*
 import java.util.Calendar.*
 
@@ -79,7 +80,7 @@ class DateTimePicker(
             },
             initialYear, initialMonth, initialDay
         )
-        datePickerDialog.datePicker.minDate = nowInMillis()
+        datePickerDialog.datePicker.minDate = TimeUtil.nowMillis()
         datePickerDialog.show()
     }
 
@@ -102,6 +103,4 @@ class DateTimePicker(
     private fun pickingFinished() {
         pickingFinishedCallback(pickedDate.timeInMillis)
     }
-
-    private fun nowInMillis() = Calendar.getInstance().timeInMillis
 }
