@@ -15,6 +15,9 @@ class DeadlinePagePresenter(
         val formattedDatetime = TimeFormatter.formatMillis(initialDatetimeMillis)
         view.updateDeadlineDate(formattedDatetime)
         updateDaysLeft()
+
+        // TODO: 15.11.2020 use data from db
+        view.updateThingsToDo(emptyList())
     }
 
     fun openDeadlineDatetimePicker() {

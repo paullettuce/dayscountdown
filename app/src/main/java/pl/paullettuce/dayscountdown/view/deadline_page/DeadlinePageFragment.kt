@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_deadline_page.*
 import pl.paullettuce.dayscountdown.R
+import pl.paullettuce.dayscountdown.model.ToDoItem
 import pl.paullettuce.dayscountdown.presenter.DeadlinePagePresenter
 import pl.paullettuce.dayscountdown.view.DateTimePicker
+import pl.paullettuce.dayscountdown.view.todo_list.ToDoAdapter
 import java.util.*
 
 class DeadlinePageFragment : Fragment(), DeadlinePageView {
@@ -25,12 +28,20 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupRecyclerView()
         presenter.initiate()
 
         dateTimePickBtn.setOnClickListener {
             presenter.openDeadlineDatetimePicker()
         }
+    }
+
+    override fun updateThingsToDo(list: List<ToDoItem>) {
+        // TODO: 15.11.2020 quite opposite actually
+        if (list.isNotEmpty()) return
+
+        val todolist = resources.getStringArray(R.array.mock_things_to_do).map { ToDoItem(it) }
+        (thingsToDoRV.adapter as ToDoAdapter).setItems(todolist)
     }
 
     override fun updateDeadlineDate(friendlyDatetime: String) {
@@ -83,6 +94,11 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
     private fun showMinutes(minutes: Long) {
         val text = getString(R.string.minutes, minutes)
         timeLeftTV.setText(text)
+    }
+
+    private fun setupRecyclerView() {
+        thingsToDoRV.layoutManager = LinearLayoutManager(this.context)
+        thingsToDoRV.adapter = ToDoAdapter(emptyList())
     }
 
 }
