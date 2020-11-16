@@ -13,9 +13,8 @@
     <string name="mock_days">23</string>
     <string name="mock_picked_time">8:00</string>
     <string-array name="mock_things_to_do">
-        <item>things to do list</item>
-        <item>remove app bar or add some title there</item>
         <item>add notifications</item>
+        <item>add koin</item>
         <item>discover alarm manager</item>
         <item>add things to do functionalities (adding, moving, checking, delet)</item>
         <item>add room db for deadline, notificaiton and things todo info</item>

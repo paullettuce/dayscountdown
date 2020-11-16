@@ -34,6 +34,10 @@ class DeadlinePagePresenter(
         updateDaysLeft()
     }
 
+    fun setupNotifications(enableNotifications: Boolean, timestamp: Long) {
+        TODO("Not yet implemented")
+    }
+
     private fun getDeadlineDatetimeOrNowIfEmpty(): Long {
         return if (deadline.getDeadlineDatetime() > 0) {
             deadline.getDeadlineDatetime()

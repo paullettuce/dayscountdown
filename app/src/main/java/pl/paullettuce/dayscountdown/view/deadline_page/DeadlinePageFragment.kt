@@ -1,13 +1,22 @@
 package pl.paullettuce.dayscountdown.view.deadline_page
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_deadline_page.*
+import pl.paullettuce.dayscountdown.AppNotificationManager
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.model.ToDoItem
 import pl.paullettuce.dayscountdown.presenter.DeadlinePagePresenter
@@ -33,6 +42,11 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
 
         dateTimePickBtn.setOnClickListener {
             presenter.openDeadlineDatetimePicker()
+        }
+
+        notificationCheckbox.setOnCheckedChangeListener { _, isChecked ->
+//            presenter.setupNotifications(isChecked, 1L)
+            AppNotificationManager.showReminderNotification(context!!, "title", "contet")
         }
     }
 
@@ -75,6 +89,10 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
 
             dateTimePicker.pickDateAndTime(initialPickerDatetimeMillis)
         }
+    }
+
+    private fun postNotification() {
+
     }
 
     private fun onDatePicked(datetimeTimestamp: Long) {
