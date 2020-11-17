@@ -1,9 +1,11 @@
 package pl.paullettuce.dayscountdown.model
 
+import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
+
 data class DeadlineData(
     var id: Long = 0,
     var datetimeTimestamp: Long = 0,
-    var notificationEnabled: Boolean = false,
-    var notificationTime: NotificationTime = NotificationTime(0, 0)
-//    var thingsToDo: List<ThingToDo>
+    var reminderNotificationEnabled: Boolean = false,
+    var reminderRepeatInterval: ReminderRepeatInterval = ReminderRepeatInterval.default(),
+    var thingsToDo: List<ToDoItem> = emptyList()
 )

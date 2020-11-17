@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">Days Countdown</string>
+    <string name="app_name">Deadline App</string>
 
     <string name="days_to">Deadline at</string>
     <string name="notification_checkbox_text">Notification everyday at</string>
     <string name="things_to_do">Things to do</string>
+
+    <string name="notification_title">Title</string>
+    <string name="notification_content">Content</string>
+
+    <string name="days">Days</string>
+    <string name="hours">Hours</string>
 
     <string name="days_hours">%1$d days\n%2$d hours</string>
     <string name="hours_minutes">%1$d hours\n%2$d minutes</string>
@@ -13,11 +19,11 @@
     <string name="mock_days">23</string>
     <string name="mock_picked_time">8:00</string>
     <string-array name="mock_things_to_do">
-        <item>add notifications</item>
-        <item>add koin</item>
-        <item>discover alarm manager</item>
-        <item>add things to do functionalities (adding, moving, checking, delet)</item>
-        <item>add room db for deadline, notificaiton and things todo info</item>
+        <item>add appropriate views for notifications time picking</item>
+        <item>alarm manager/work manager to setup notifications</item>
+        <item>add koin or dagger (prefer dagger)</item>
+        <item>things to do (adding, moving, checking, delet)</item>
+        <item>add room db for deadline, notificaiton and things todo</item>
         <item>add time ticking function</item>
         <item>replace notification everyday at with dropdown,add option for every hour/half hour </item>
         <item>possibly add animation for minutes passing</item>

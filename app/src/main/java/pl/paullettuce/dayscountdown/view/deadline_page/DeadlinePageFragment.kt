@@ -1,31 +1,30 @@
 package pl.paullettuce.dayscountdown.view.deadline_page
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_deadline_page.*
-import pl.paullettuce.dayscountdown.AppNotificationManager
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.model.ToDoItem
+import pl.paullettuce.dayscountdown.notfications.AppNotificationManagerImpl
+import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
 import pl.paullettuce.dayscountdown.presenter.DeadlinePagePresenter
 import pl.paullettuce.dayscountdown.view.DateTimePicker
 import pl.paullettuce.dayscountdown.view.todo_list.ToDoAdapter
-import java.util.*
 
 class DeadlinePageFragment : Fragment(), DeadlinePageView {
-    val presenter = DeadlinePagePresenter(this)
+    lateinit var presenter: DeadlinePagePresenter
+    lateinit var appNotificationManager: AppNotificationManagerImpl
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        appNotificationManager = AppNotificationManagerImpl(context)
+        presenter = DeadlinePagePresenter(this, appNotificationManager)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,9 +43,12 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
             presenter.openDeadlineDatetimePicker()
         }
 
+        notificationTimePickBtn.setOnClickListener {
+            presenter.openNotificationTimePicker()
+        }
+
         notificationCheckbox.setOnCheckedChangeListener { _, isChecked ->
-//            presenter.setupNotifications(isChecked, 1L)
-            AppNotificationManager.showReminderNotification(context!!, "title", "contet")
+            presenter.toggleNotifications(isChecked, 1L)
         }
     }
 
@@ -59,7 +61,7 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
     }
 
     override fun updateDeadlineDate(friendlyDatetime: String) {
-        dateTimePickBtn.setText(friendlyDatetime)
+        dateTimePickBtn.text = friendlyDatetime
     }
 
     //TODO(move logic to presenter)
@@ -77,26 +79,28 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
         }
     }
 
-    override fun updateNotificationTime(time: String) {
-        TODO("Not yet implemented")
+    override fun updateReminderInterval(reminderRepeatInterval: ReminderRepeatInterval) {
+        setReminderInterval(reminderRepeatInterval)
     }
 
-    override fun openDeadlinePickerWithStartDate(initialPickerDatetimeMillis: Long) {
+    override fun openDeadlineDateTimePicker(initialPickerDatetimeMillis: Long) {
         context?.let {
-            val dateTimePicker = DateTimePicker(it) { pickedDatetime ->
-                onDatePicked(pickedDatetime)
+            val dateTimePicker = DateTimePicker(it) { pickedDatetimeMillis ->
+                presenter.updateDeadlineDatetime(pickedDatetimeMillis)
             }
-
             dateTimePicker.pickDateAndTime(initialPickerDatetimeMillis)
         }
     }
 
-    private fun postNotification() {
+//    private fun readReminderInterval(): ReminderRepeatInterval {
+//        val interval = somefield.gettext.parse
+//        val intervalUnit = otherfield.getselected.parse
+//        return ReminderRepeatInterval(interval, intervalUnit)
+//    }
 
-    }
-
-    private fun onDatePicked(datetimeTimestamp: Long) {
-        presenter.updateDeadlineDatetime(datetimeTimestamp)
+    private fun setReminderInterval(interval: ReminderRepeatInterval) {
+//        somefield.gettext = interval.repeatInterval
+//        otherfield.select(interval.repeatIntervalTimeUnit)
     }
 
     private fun showDaysAndHours(days: Long, hours: Long) {

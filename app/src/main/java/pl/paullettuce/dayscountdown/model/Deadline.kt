@@ -1,6 +1,7 @@
 package pl.paullettuce.dayscountdown.model
 
 import pl.paullettuce.dayscountdown.commons.TimeFormatter
+import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
 
 class Deadline {
 
@@ -10,6 +11,8 @@ class Deadline {
         return TimeFormatter.formatMillis(deadlineData.datetimeTimestamp)
     }
 
+    fun getId() = deadlineData.id
+
     fun setDeadlineDatetime(datetime: Long) {
         deadlineData.datetimeTimestamp = datetime
     }
@@ -17,14 +20,14 @@ class Deadline {
     fun getDeadlineDatetime(): Long = deadlineData.datetimeTimestamp
 
     fun setNotificationEnabled(enabled: Boolean) {
-        deadlineData.notificationEnabled = enabled
+        deadlineData.reminderNotificationEnabled = enabled
     }
 
-    fun getNotificationEnabled() = deadlineData.notificationEnabled
+    fun getNotificationEnabled() = deadlineData.reminderNotificationEnabled
 
-    fun setNotificationTime(notificationTime: NotificationTime) {
-        deadlineData.notificationTime = notificationTime
+    fun setReminderRepeatInterval(interval: ReminderRepeatInterval) {
+        deadlineData.reminderRepeatInterval = interval
     }
 
-    fun getNotificationTime() = deadlineData.notificationTime
+    fun getReminderRepeatInterval() = deadlineData.reminderRepeatInterval
 }
