@@ -42,7 +42,7 @@ class DeadlinePagePresenter(
         updateDaysLeft()
     }
 
-    fun updateReminderRepeatInterval(reminderRepeatInterval: ReminderRepeatInterval) {
+    fun saveReminderRepeatInterval(reminderRepeatInterval: ReminderRepeatInterval) {
         deadline.setReminderRepeatInterval(reminderRepeatInterval)
     }
 

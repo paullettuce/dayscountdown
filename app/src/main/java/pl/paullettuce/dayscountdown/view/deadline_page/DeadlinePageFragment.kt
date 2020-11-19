@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_deadline_page.*
@@ -43,13 +44,28 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
             presenter.openDeadlineDatetimePicker()
         }
 
-        notificationTimePickBtn.setOnClickListener {
-            presenter.openNotificationTimePicker()
-        }
-
-        notificationCheckbox.setOnCheckedChangeListener { _, isChecked ->
+        reminderCheckbox.setOnCheckedChangeListener { _, isChecked ->
             presenter.toggleNotifications(isChecked, 1L)
         }
+
+        reminderIntervalET.setValueRange(1, 999)
+        reminderIntervalET.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) saveReminderInterval()
+        }
+
+        setAdapter()
+    }
+
+    private fun setAdapter() {
+        ArrayAdapter.createFromResource(
+            context!!,
+            R.array.dayshouts,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            reminderIntervalTimeUnitSpinner.adapter = adapter
+        }
+
     }
 
     override fun updateThingsToDo(list: List<ToDoItem>) {
@@ -90,6 +106,10 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
             }
             dateTimePicker.pickDateAndTime(initialPickerDatetimeMillis)
         }
+    }
+
+    private fun saveReminderInterval() {
+//        presenter.saveReminderInterval(readReminderInterval)
     }
 
 //    private fun readReminderInterval(): ReminderRepeatInterval {

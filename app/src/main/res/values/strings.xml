@@ -2,14 +2,19 @@
     <string name="app_name">Deadline App</string>
 
     <string name="days_to">Deadline at</string>
-    <string name="notification_checkbox_text">Notification everyday at</string>
     <string name="things_to_do">Things to do</string>
+
+    <string name="notification_checkbox_text">Notification every</string>
+    <string name="days">Days</string>
+    <string name="hours">Hours</string>
+
+    <string-array name="dayshouts">
+        <item>days</item>
+        <item>hours</item>
+    </string-array>
 
     <string name="notification_title">Title</string>
     <string name="notification_content">Content</string>
-
-    <string name="days">Days</string>
-    <string name="hours">Hours</string>
 
     <string name="days_hours">%1$d days\n%2$d hours</string>
     <string name="hours_minutes">%1$d hours\n%2$d minutes</string>
@@ -20,12 +25,13 @@
     <string name="mock_picked_time">8:00</string>
     <string-array name="mock_things_to_do">
         <item>add appropriate views for notifications time picking</item>
-        <item>alarm manager/work manager to setup notifications</item>
+        <item>replace notification everyday at with dropdown,add option for every hour/half hour </item>
+        <item>style notifications</item>
+        <item>you will receive notification in 12hours toast</item>
         <item>add koin or dagger (prefer dagger)</item>
         <item>things to do (adding, moving, checking, delet)</item>
         <item>add room db for deadline, notificaiton and things todo</item>
         <item>add time ticking function</item>
-        <item>replace notification everyday at with dropdown,add option for every hour/half hour </item>
         <item>possibly add animation for minutes passing</item>
         <item>sound in app enabled checkbox, shoosh for minute, gong for hour</item>
         <item>every hour notification with a gong sound</item>
