@@ -4,14 +4,17 @@
     <string name="days_to">Deadline at</string>
     <string name="things_to_do">Things to do</string>
 
-    <string name="notification_checkbox_text">Notification every</string>
-    <string name="days">Days</string>
-    <string name="hours">Hours</string>
 
-    <string-array name="dayshouts">
-        <item>days</item>
-        <item>hours</item>
-    </string-array>
+    <string name="notification_checkbox_text">Notification every</string>
+    <plurals name="days">
+        <item quantity="one">Day</item>
+        <item quantity="other">Days</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">Hour</item>
+        <item quantity="other">Hours</item>
+    </plurals>
+
 
     <string name="notification_title">Title</string>
     <string name="notification_content">Content</string>
@@ -27,6 +30,7 @@
         <item>add appropriate views for notifications time picking</item>
         <item>replace notification everyday at with dropdown,add option for every hour/half hour </item>
         <item>style notifications</item>
+        <item>pluralize timelfet</item>
         <item>you will receive notification in 12hours toast</item>
         <item>add koin or dagger (prefer dagger)</item>
         <item>things to do (adding, moving, checking, delet)</item>

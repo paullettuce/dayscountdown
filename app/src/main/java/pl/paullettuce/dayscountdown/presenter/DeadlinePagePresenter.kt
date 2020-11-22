@@ -14,14 +14,13 @@ class DeadlinePagePresenter(
     private val deadline = Deadline()
 
     fun initiate() {
-        val initialDatetimeMillis = getDeadlineDatetimeOrNowIfEmpty()
-        val formattedDatetime = TimeFormatter.formatMillis(initialDatetimeMillis)
-        view.updateDeadlineDate(formattedDatetime)
-        updateDaysLeft()
-        view.updateReminderInterval(deadline.getReminderRepeatInterval())
+        showDeadlineDate()
+        showDaysLeft()
+        view.showReminderInterval(deadline.getReminderRepeatInterval())
+        showReminderTimeUnits()
 
         // TODO: 15.11.2020 use data from db
-        view.updateThingsToDo(emptyList())
+        view.showThingsToDo(emptyList())
     }
 
     fun openDeadlineDatetimePicker() {
@@ -29,17 +28,13 @@ class DeadlinePagePresenter(
         view.openDeadlineDateTimePicker(initialDatetimeMillis)
     }
 
-    fun openNotificationTimePicker() {
-
-    }
-
-    fun updateDeadlineDatetime(datetimeMillis: Long) {
+    fun saveDeadlineDatetime(datetimeMillis: Long) {
         deadline.setDeadlineDatetime(datetimeMillis)
 
         val formattedDatetime = deadline.toString()
-        view.updateDeadlineDate(formattedDatetime)
+        view.showDeadlineDate(formattedDatetime)
 
-        updateDaysLeft()
+        showDaysLeft()
     }
 
     fun saveReminderRepeatInterval(reminderRepeatInterval: ReminderRepeatInterval) {
@@ -62,6 +57,12 @@ class DeadlinePagePresenter(
         notificationManager.disableReminders(deadline.getId())
     }
 
+    private fun showDeadlineDate() {
+        val initialDatetimeMillis = getDeadlineDatetimeOrNowIfEmpty()
+        val formattedDatetime = TimeFormatter.formatMillis(initialDatetimeMillis)
+        view.showDeadlineDate(formattedDatetime)
+    }
+
     private fun getDeadlineDatetimeOrNowIfEmpty(): Long {
         return if (deadline.getDeadlineDatetime() > 0) {
             deadline.getDeadlineDatetime()
@@ -70,10 +71,24 @@ class DeadlinePagePresenter(
         }
     }
 
-    private fun updateDaysLeft() {
+    private fun showDaysLeft() {
         val deadlineDatetime = deadline.getDeadlineDatetime()
         val timeLeft = TimeUtil.timeBetween(deadlineDatetime, TimeUtil.nowMillis())
 
-        view.updateTimeLeft(timeLeft.days, timeLeft.hours, timeLeft.minutes)
+        when {
+            timeLeft.days > 0 -> {
+                view.showDaysAndHours(timeLeft.days, timeLeft.hours)
+            }
+            timeLeft.hours > 0 -> {
+                view.showHoursAndMinutes(timeLeft.hours, timeLeft.minutes)
+            }
+            else -> {
+                view.showMinutes(timeLeft.minutes)
+            }
+        }
+    }
+
+    private fun showReminderTimeUnits() {
+
     }
 }

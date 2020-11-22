@@ -4,10 +4,13 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import androidx.core.widget.addTextChangedListener
 import pl.paullettuce.dayscountdown.commons.logd
 
 class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
+    interface OnChange {
+        fun onValueChange(number: Int)
+    }
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -20,8 +23,11 @@ class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
         override fun afterTextChanged(s: Editable?) {
             try {
                 val number = s.toString().toInt()
-                if (number > max) replaceAll(s, max)
-                else if (number < min) replaceAll(s, min)
+                when {
+                    number > max -> replaceAll(s, max)
+                    number < min -> replaceAll(s, min)
+                    else -> notifyIfChanged(number)
+                }
             } catch (e: NumberFormatException) {
                 replaceAll(s, min)
             }
@@ -31,6 +37,7 @@ class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
             logd("replaceAll: $s -> $replacement")
             val endIndex = s?.length ?: 0
             s?.replace(0, endIndex, replacement.toString())
+            notifyIfChanged(replacement)
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -38,24 +45,55 @@ class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     }
 
+    private var oldValue: Int = 0
+
     var min: Int = Int.MIN_VALUE
         private set(value) {
             field = value
             capValueIfLowerThanMin()
         }
+
     var max: Int = Int.MAX_VALUE
         private set(value) {
             field = value
             capValueIfHigherThanMax()
         }
+    var onChangeCallback: OnChange? = null
 
     fun setValueRange(min: Int, max: Int) {
         this.min = min
         this.max = max
-        insertMinIfEmpty()
 
         removeTextChangedListener(minMaxCappingTextWatcher)
         addTextChangedListener(minMaxCappingTextWatcher)
+    }
+
+    @Throws(NumberFormatException::class)
+    fun getValue(): Int = parseTextField()
+
+    private fun capValueIfLowerThanMin() {
+        tryParsingTextField { number ->
+            if (number < min) {
+                setNumber(min)
+            }
+        }
+    }
+
+    private fun capValueIfHigherThanMax() {
+        tryParsingTextField { number ->
+            if (number > max) {
+                setNumber(max)
+            }
+        }
+    }
+
+    private fun tryParsingTextField(action: (number: Int) -> Unit) {
+        try {
+            val currentNumber = parseTextField()
+            action(currentNumber)
+        } catch (e: NumberFormatException) {
+            insertMinIfEmpty()
+        }
     }
 
     private fun insertMinIfEmpty() {
@@ -63,32 +101,17 @@ class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
             setNumber(min)
     }
 
-    private fun capValueIfLowerThanMin() {
-        tryActionOnCurrentNumber {
-            if (it < min) {
-                setNumber(min)
-            }
-        }
-    }
-
-    private fun capValueIfHigherThanMax() {
-        tryActionOnCurrentNumber {
-            if (it > max) {
-                setNumber(max)
-            }
-        }
-    }
-
-    private fun tryActionOnCurrentNumber(action: (number: Int) -> Unit) {
-        try {
-            val currentNumber = parseTextField()
-            action(currentNumber)
-        } catch (e: NumberFormatException) {
-        }
-    }
-
     private fun setNumber(number: Int) {
         setText(number.toString())
+        notifyIfChanged(number)
+    }
+
+    private fun notifyIfChanged(newValue: Int) {
+        logd("NotifyIfChanged: oldValue=$oldValue, newValue=$newValue")
+        if (newValue != oldValue) {
+            oldValue = newValue
+            onChangeCallback?.onValueChange(newValue)
+        }
     }
 
     @Throws(NumberFormatException::class)
