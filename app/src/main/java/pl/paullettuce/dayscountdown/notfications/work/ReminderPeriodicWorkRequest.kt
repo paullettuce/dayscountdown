@@ -12,9 +12,9 @@ class ReminderPeriodicWorkRequest(
 ) {
     fun build(): PeriodicWorkRequest {
         return PeriodicWorkRequestBuilder<ShowReminderNotificationWork>(
-            interval.repeatInterval,
+            interval.repeatInterval.toLong(),
             interval.repeatIntervalTimeUnit,
-            5, TimeUnit.MINUTES //set shortest possible flex time
+            5, TimeUnit.MINUTES // shortest possible flex time
         )
             .setInputData(
                 workDataOf(

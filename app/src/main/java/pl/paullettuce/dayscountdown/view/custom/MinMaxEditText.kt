@@ -21,6 +21,7 @@ class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
 
     private val minMaxCappingTextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
+            logd("aftertextchanged: $s")
             try {
                 val number = s.toString().toInt()
                 when {
@@ -66,6 +67,10 @@ class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
 
         removeTextChangedListener(minMaxCappingTextWatcher)
         addTextChangedListener(minMaxCappingTextWatcher)
+    }
+
+    fun setValue(number: Int) {
+        setText(number.toString())
     }
 
     @Throws(NumberFormatException::class)

@@ -11,20 +11,19 @@ import kotlinx.android.synthetic.main.fragment_deadline_page.*
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MAX_VALUE
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MIN_VALUE
+import pl.paullettuce.dayscountdown.model.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.model.ToDoItem
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManagerImpl
-import pl.paullettuce.dayscountdown.notfications.ReminderIntervalTimeUnitPluralizingAdapter
-import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
-import pl.paullettuce.dayscountdown.notfications.TimeUnitToPluralResource
+import pl.paullettuce.dayscountdown.notfications.TimeUnitPluralizingAdapter
 import pl.paullettuce.dayscountdown.presenter.DeadlinePagePresenter
 import pl.paullettuce.dayscountdown.view.DateTimePicker
 import pl.paullettuce.dayscountdown.view.custom.MinMaxEditText
 import pl.paullettuce.dayscountdown.view.todo_list.ToDoAdapter
-import java.util.concurrent.TimeUnit
 
 class DeadlinePageFragment : Fragment(), DeadlinePageView {
     lateinit var presenter: DeadlinePagePresenter
     lateinit var appNotificationManager: AppNotificationManagerImpl
+    var adapter: TimeUnitPluralizingAdapter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,36 +43,13 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupReminderIntervalET()
-        setAdapter()
+        createTimeUnitsAdapter()
         setListeners()
         presenter.initiate()
     }
 
-    val adapterItems = mutableListOf<TimeUnitToPluralResource>()
-    var adapter: ReminderIntervalTimeUnitPluralizingAdapter? = null
-
-    private fun setAdapter() {
-        adapterItems.add(TimeUnitToPluralResource(context!!, TimeUnit.DAYS, R.plurals.days, reminderIntervalET.getValue()))
-        adapterItems.add(TimeUnitToPluralResource(context!!, TimeUnit.HOURS, R.plurals.hours, reminderIntervalET.getValue()))
-
-        adapter = ReminderIntervalTimeUnitPluralizingAdapter(
-            context!!,
-            adapterItems
-        )
-        reminderIntervalTimeUnitSpinner.adapter = adapter
-    }
-
-    override fun showThingsToDo(list: List<ToDoItem>) {
-        val todolist = resources.getStringArray(R.array.mock_things_to_do).map { ToDoItem(it) }
-        (thingsToDoRV.adapter as ToDoAdapter).setItems(todolist)
-    }
-
     override fun showDeadlineDate(friendlyDatetime: String) {
         dateTimePickBtn.text = friendlyDatetime
-    }
-
-    override fun showReminderInterval(reminderRepeatInterval: ReminderRepeatInterval) {
-        setReminderInterval(reminderRepeatInterval)
     }
 
     override fun openDeadlineDateTimePicker(initialPickerDatetimeMillis: Long) {
@@ -83,6 +59,24 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
             }
             dateTimePicker.pickDateAndTime(initialPickerDatetimeMillis)
         }
+    }
+
+    override fun showReminderIntervalValue(intervalValue: Int) {
+        reminderIntervalET.setValue(intervalValue)
+        adapter?.quantity = intervalValue
+    }
+
+    override fun showReminderTimeUnits(units: List<TimeUnitToPluralRes>, selectItemIndex: Int) {
+        adapter?.apply {
+            clear()
+            addAll(units)
+        }
+        reminderIntervalTimeUnitSpinner.setSelection(selectItemIndex)
+    }
+
+    override fun showThingsToDo(list: List<ToDoItem>) {
+        val todolist = resources.getStringArray(R.array.mock_things_to_do).map { ToDoItem(it) }
+        (thingsToDoRV.adapter as ToDoAdapter).setItems(todolist)
     }
 
     override fun showDaysAndHours(days: Long, hours: Long) {
@@ -110,12 +104,6 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
 //        return ReminderRepeatInterval(interval, intervalUnit)
 //    }
 
-    private fun setReminderInterval(interval: ReminderRepeatInterval) {
-//        somefield.gettext = interval.repeatInterval
-//        otherfield.select(interval.repeatIntervalTimeUnit)
-    }
-
-
     private fun setupRecyclerView() {
         thingsToDoRV.layoutManager = LinearLayoutManager(this.context)
         thingsToDoRV.adapter = ToDoAdapter(emptyList())
@@ -128,6 +116,13 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
         reminderCheckbox.setOnCheckedChangeListener { _, isChecked ->
             presenter.toggleNotifications(isChecked, 1L)
         }
+    }
+
+    private fun createTimeUnitsAdapter() {
+        adapter = context?.let {
+            TimeUnitPluralizingAdapter(it)
+        }
+        reminderIntervalTimeUnitSpinner.adapter = adapter
     }
 
     private fun setupReminderIntervalET() {

@@ -7,12 +7,12 @@
 
     <string name="notification_checkbox_text">Notification every</string>
     <plurals name="days">
-        <item quantity="one">Day</item>
-        <item quantity="other">Days</item>
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
     </plurals>
     <plurals name="hours">
-        <item quantity="one">Hour</item>
-        <item quantity="other">Hours</item>
+        <item quantity="one">hour</item>
+        <item quantity="other">hours</item>
     </plurals>
 
 

@@ -1,23 +1,29 @@
 package pl.paullettuce.dayscountdown.presenter
 
+import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.commons.TimeFormatter
 import pl.paullettuce.dayscountdown.commons.TimeUtil
 import pl.paullettuce.dayscountdown.model.Deadline
+import pl.paullettuce.dayscountdown.model.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManager
 import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
 import pl.paullettuce.dayscountdown.view.deadline_page.DeadlinePageView
+import java.util.concurrent.TimeUnit
 
 class DeadlinePagePresenter(
     private val view: DeadlinePageView,
     private val notificationManager: AppNotificationManager
 ) {
     private val deadline = Deadline()
+    private val reminderTimeUnits = listOf(
+        TimeUnitToPluralRes(TimeUnit.DAYS, R.plurals.days),
+        TimeUnitToPluralRes(TimeUnit.HOURS, R.plurals.hours)
+    )
 
     fun initiate() {
         showDeadlineDate()
         showDaysLeft()
-        view.showReminderInterval(deadline.getReminderRepeatInterval())
-        showReminderTimeUnits()
+        showReminderInterval()
 
         // TODO: 15.11.2020 use data from db
         view.showThingsToDo(emptyList())
@@ -88,7 +94,12 @@ class DeadlinePagePresenter(
         }
     }
 
-    private fun showReminderTimeUnits() {
-
+    private fun showReminderInterval() {
+        val interval = deadline.getReminderRepeatInterval()
+        view.showReminderIntervalValue(interval.repeatInterval)
+        view.showReminderTimeUnits(reminderTimeUnits, selectItemIndex(interval))
     }
+
+    private fun selectItemIndex(interval: ReminderRepeatInterval): Int =
+        reminderTimeUnits.indexOfFirst { it.timeUnit == interval.repeatIntervalTimeUnit }
 }

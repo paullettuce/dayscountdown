@@ -1,16 +1,15 @@
 package pl.paullettuce.dayscountdown.view.deadline_page
 
-import kotlinx.android.synthetic.main.fragment_deadline_page.*
-import pl.paullettuce.dayscountdown.R
+import pl.paullettuce.dayscountdown.model.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.model.ToDoItem
-import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
 
 interface DeadlinePageView {
     fun showDeadlineDate(friendlyDatetime: String)
     fun showDaysAndHours(days: Long, hours: Long)
     fun showHoursAndMinutes(hours: Long, minutes: Long)
     fun showMinutes(minutes: Long)
-    fun showReminderInterval(reminderRepeatInterval: ReminderRepeatInterval)
+    fun showReminderIntervalValue(intervalValue: Int)
+    fun showReminderTimeUnits(units: List<TimeUnitToPluralRes>, selectItemIndex: Int)
     fun showThingsToDo(list: List<ToDoItem>)
 
     fun openDeadlineDateTimePicker(initialPickerDatetimeMillis: Long)
