@@ -1,4 +1,4 @@
-package pl.paullettuce.dayscountdown.model
+package pl.paullettuce.dayscountdown.data
 
 import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
 

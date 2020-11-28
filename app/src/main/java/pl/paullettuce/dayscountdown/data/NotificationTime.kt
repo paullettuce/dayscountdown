@@ -1,4 +1,4 @@
-package pl.paullettuce.dayscountdown.model
+package pl.paullettuce.dayscountdown.data
 
 data class NotificationTime(
     var hour: Int,

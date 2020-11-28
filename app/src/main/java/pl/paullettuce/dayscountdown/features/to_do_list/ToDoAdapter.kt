@@ -1,4 +1,4 @@
-package pl.paullettuce.dayscountdown.view.todo_list
+package pl.paullettuce.dayscountdown.features.to_do_list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_to_do.view.*
 import pl.paullettuce.dayscountdown.R
-import pl.paullettuce.dayscountdown.model.ToDoItem
+import pl.paullettuce.dayscountdown.data.ToDoItem
 
 class ToDoAdapter(private var items: List<ToDoItem> = emptyList()): RecyclerView.Adapter<ToDoItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoItemViewHolder {
-        return ToDoItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_to_do, parent, false))
+        return ToDoItemViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_to_do, parent, false)
+        )
     }
 
     override fun getItemCount() = items.size

@@ -1,4 +1,4 @@
-package pl.paullettuce.dayscountdown.model
+package pl.paullettuce.dayscountdown.data
 
 import androidx.annotation.PluralsRes
 import java.util.concurrent.TimeUnit

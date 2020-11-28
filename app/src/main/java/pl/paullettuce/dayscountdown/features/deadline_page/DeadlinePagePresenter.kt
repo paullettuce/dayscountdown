@@ -1,13 +1,12 @@
-package pl.paullettuce.dayscountdown.presenter
+package pl.paullettuce.dayscountdown.features.deadline_page
 
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.commons.TimeFormatter
 import pl.paullettuce.dayscountdown.commons.TimeUtil
-import pl.paullettuce.dayscountdown.model.Deadline
-import pl.paullettuce.dayscountdown.model.TimeUnitToPluralRes
+import pl.paullettuce.dayscountdown.data.Deadline
+import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManager
 import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
-import pl.paullettuce.dayscountdown.view.deadline_page.DeadlinePageView
 import java.util.concurrent.TimeUnit
 
 class DeadlinePagePresenter(

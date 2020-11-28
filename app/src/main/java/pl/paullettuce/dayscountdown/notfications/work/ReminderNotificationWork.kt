@@ -3,9 +3,8 @@ package pl.paullettuce.dayscountdown.notfications.work
 import android.content.Context
 import android.util.Log
 import androidx.work.*
-import pl.paullettuce.dayscountdown.model.DeadlineData
+import pl.paullettuce.dayscountdown.data.DeadlineData
 import pl.paullettuce.dayscountdown.notfications.ReminderNotification
-import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
 
 const val DEADLINE_ID_KEY = "DEADLINE_ID_KEY"
 

@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timeLeftTV" />
 
-    <pl.paullettuce.dayscountdown.view.custom.MinMaxEditText
+    <pl.paullettuce.dayscountdown.view.MinMaxEditText
         android:id="@+id/reminderIntervalET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

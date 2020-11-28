@@ -1,7 +1,7 @@
-package pl.paullettuce.dayscountdown.view.deadline_page
+package pl.paullettuce.dayscountdown.features.deadline_page
 
-import pl.paullettuce.dayscountdown.model.TimeUnitToPluralRes
-import pl.paullettuce.dayscountdown.model.ToDoItem
+import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
+import pl.paullettuce.dayscountdown.data.ToDoItem
 
 interface DeadlinePageView {
     fun showDeadlineDate(friendlyDatetime: String)

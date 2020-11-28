@@ -6,7 +6,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import pl.paullettuce.dayscountdown.R
-import pl.paullettuce.dayscountdown.view.MainActivity
+import pl.paullettuce.dayscountdown.MainActivity
 
 //Id is needed to update notification instead of duplicating
 const val REMINDER_NOTIFICATION_ID = 354511

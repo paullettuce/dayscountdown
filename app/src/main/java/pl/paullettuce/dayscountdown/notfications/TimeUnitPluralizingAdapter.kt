@@ -5,9 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import pl.paullettuce.dayscountdown.R
-import pl.paullettuce.dayscountdown.model.TimeUnitToPluralRes
-import java.util.concurrent.TimeUnit
+import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 
 class TimeUnitPluralizingAdapter(
     context: Context,

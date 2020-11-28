@@ -1,4 +1,4 @@
-package pl.paullettuce.dayscountdown.model
+package pl.paullettuce.dayscountdown.data
 
 import android.util.Log
 import pl.paullettuce.dayscountdown.commons.TimeUtil

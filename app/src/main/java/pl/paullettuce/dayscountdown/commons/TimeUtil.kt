@@ -3,7 +3,7 @@ package pl.paullettuce.dayscountdown.commons
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import pl.paullettuce.dayscountdown.model.TimeLeft
+import pl.paullettuce.dayscountdown.data.TimeLeft
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset

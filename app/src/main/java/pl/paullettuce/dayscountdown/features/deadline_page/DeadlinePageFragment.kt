@@ -1,4 +1,4 @@
-package pl.paullettuce.dayscountdown.view.deadline_page
+package pl.paullettuce.dayscountdown.features.deadline_page
 
 import android.content.Context
 import android.os.Bundle
@@ -11,14 +11,13 @@ import kotlinx.android.synthetic.main.fragment_deadline_page.*
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MAX_VALUE
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MIN_VALUE
-import pl.paullettuce.dayscountdown.model.TimeUnitToPluralRes
-import pl.paullettuce.dayscountdown.model.ToDoItem
+import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
+import pl.paullettuce.dayscountdown.data.ToDoItem
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManagerImpl
 import pl.paullettuce.dayscountdown.notfications.TimeUnitPluralizingAdapter
-import pl.paullettuce.dayscountdown.presenter.DeadlinePagePresenter
 import pl.paullettuce.dayscountdown.view.DateTimePicker
-import pl.paullettuce.dayscountdown.view.custom.MinMaxEditText
-import pl.paullettuce.dayscountdown.view.todo_list.ToDoAdapter
+import pl.paullettuce.dayscountdown.view.MinMaxEditText
+import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
 
 class DeadlinePageFragment : Fragment(), DeadlinePageView {
     lateinit var presenter: DeadlinePagePresenter
@@ -28,7 +27,11 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         appNotificationManager = AppNotificationManagerImpl(context)
-        presenter = DeadlinePagePresenter(this, appNotificationManager)
+        presenter =
+            DeadlinePagePresenter(
+                this,
+                appNotificationManager
+            )
     }
 
     override fun onCreateView(
@@ -106,7 +109,10 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
 
     private fun setupRecyclerView() {
         thingsToDoRV.layoutManager = LinearLayoutManager(this.context)
-        thingsToDoRV.adapter = ToDoAdapter(emptyList())
+        thingsToDoRV.adapter =
+            ToDoAdapter(
+                emptyList()
+            )
     }
 
     private fun setListeners() {

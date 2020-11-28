@@ -1,4 +1,4 @@
-package pl.paullettuce.dayscountdown.view.custom
+package pl.paullettuce.dayscountdown.view
 
 import android.content.Context
 import android.text.Editable
