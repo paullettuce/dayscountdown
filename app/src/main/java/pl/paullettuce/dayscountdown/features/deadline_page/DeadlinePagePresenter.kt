@@ -8,18 +8,19 @@ import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManager
 import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class DeadlinePagePresenter(
-    private val view: DeadlinePageView,
+class DeadlinePagePresenter @Inject constructor(
+    private val view: DeadlinePageContract.View,
     private val notificationManager: AppNotificationManager
-) {
+): DeadlinePageContract.Presenter {
     private val deadline = Deadline()
     private val reminderTimeUnits = listOf(
         TimeUnitToPluralRes(TimeUnit.DAYS, R.plurals.days),
         TimeUnitToPluralRes(TimeUnit.HOURS, R.plurals.hours)
     )
 
-    fun initiate() {
+    override fun initiate() {
         showDeadlineDate()
         showDaysLeft()
         showReminderInterval()
@@ -28,12 +29,12 @@ class DeadlinePagePresenter(
         view.showThingsToDo(emptyList())
     }
 
-    fun openDeadlineDatetimePicker() {
+    override fun openDeadlineDatetimePicker() {
         val initialDatetimeMillis = getDeadlineDatetimeOrNowIfEmpty()
         view.openDeadlineDateTimePicker(initialDatetimeMillis)
     }
 
-    fun saveDeadlineDatetime(datetimeMillis: Long) {
+    override fun saveDeadlineDatetime(datetimeMillis: Long) {
         deadline.setDeadlineDatetime(datetimeMillis)
 
         val formattedDatetime = deadline.toString()
@@ -42,11 +43,11 @@ class DeadlinePagePresenter(
         showDaysLeft()
     }
 
-    fun saveReminderRepeatInterval(reminderRepeatInterval: ReminderRepeatInterval) {
+    override fun saveReminderRepeatInterval(reminderRepeatInterval: ReminderRepeatInterval) {
         deadline.setReminderRepeatInterval(reminderRepeatInterval)
     }
 
-    fun toggleNotifications(enableNotifications: Boolean, timestamp: Long) {
+    override fun toggleNotifications(enableNotifications: Boolean, timestamp: Long) {
         if (enableNotifications) {
             scheduleNotifications()
         } else {

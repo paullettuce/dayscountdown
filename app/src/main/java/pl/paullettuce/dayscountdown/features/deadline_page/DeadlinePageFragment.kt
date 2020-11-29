@@ -7,31 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_deadline_page.*
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MAX_VALUE
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MIN_VALUE
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.data.ToDoItem
-import pl.paullettuce.dayscountdown.notfications.AppNotificationManagerImpl
+import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
 import pl.paullettuce.dayscountdown.notfications.TimeUnitPluralizingAdapter
 import pl.paullettuce.dayscountdown.view.DateTimePicker
 import pl.paullettuce.dayscountdown.view.MinMaxEditText
-import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
+import javax.inject.Inject
 
-class DeadlinePageFragment : Fragment(), DeadlinePageView {
-    lateinit var presenter: DeadlinePagePresenter
-    lateinit var appNotificationManager: AppNotificationManagerImpl
+@AndroidEntryPoint
+class DeadlinePageFragment : Fragment(),
+    DeadlinePageContract.View {
+    @Inject lateinit var presenter: DeadlinePageContract.Presenter
     var adapter: TimeUnitPluralizingAdapter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        appNotificationManager = AppNotificationManagerImpl(context)
-        presenter =
-            DeadlinePagePresenter(
-                this,
-                appNotificationManager
-            )
     }
 
     override fun onCreateView(
@@ -141,5 +137,9 @@ class DeadlinePageFragment : Fragment(), DeadlinePageView {
             adapter?.quantity = number
             saveReminderInterval()
         }
+    }
+
+    companion object {
+        val TAG = "DeadlinePageFragment"
     }
 }

@@ -6,11 +6,15 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 const val REMINDER_NOTIFICATIONS_CHANNEL_ID = "320-5430958-0"
 const val REMINDER_NOTIFICATIONS_CHANNEL_NAME = "Reminders"
 
-class AppNotificationManagerImpl(private val context: Context): AppNotificationManager {
+class AppNotificationManagerImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+): AppNotificationManager {
     private val TAG = "AppNotificationManager"
 
     init {
