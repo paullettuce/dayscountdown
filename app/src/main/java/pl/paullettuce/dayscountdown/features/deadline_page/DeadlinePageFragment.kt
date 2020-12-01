@@ -1,10 +1,7 @@
 package pl.paullettuce.dayscountdown.features.deadline_page
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,22 +18,11 @@ import pl.paullettuce.dayscountdown.view.MinMaxEditText
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DeadlinePageFragment : Fragment(),
+class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
     DeadlinePageContract.View {
+
     @Inject lateinit var presenter: DeadlinePageContract.Presenter
     var adapter: TimeUnitPluralizingAdapter? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_deadline_page, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

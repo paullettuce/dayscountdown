@@ -4,7 +4,7 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import pl.paullettuce.dayscountdown.commons.logd
+import pl.paullettuce.dayscountdown.commons.extensions.logd
 
 class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
     interface OnChange {

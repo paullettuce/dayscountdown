@@ -1,10 +1,11 @@
 package pl.paullettuce.dayscountdown.di
 
+import androidx.fragment.app.Fragment
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
-import dagger.hilt.android.scopes.FragmentScoped
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageContract
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePagePresenter
@@ -12,16 +13,24 @@ import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePagePresenter
 @Module
 @InstallIn(FragmentComponent::class)
 abstract class DeadlinePageModule {
-
     @Binds
-    @FragmentScoped
-    abstract fun bindDeadlinePageView(
-        deadlinePageFragment: DeadlinePageFragment
+    abstract fun provideDeadlinePageView(
+        fragment: DeadlinePageFragment
     ): DeadlinePageContract.View
 
     @Binds
-    @FragmentScoped
-    abstract fun bindDeadlinePagePresenter(
+    abstract fun provideDeadlinePagePresenter(
         presenter: DeadlinePagePresenter
     ): DeadlinePageContract.Presenter
+}
+
+@InstallIn(FragmentComponent::class)
+@Module
+object DeadlinePageFragmentModule {
+    @Provides
+    fun provideDeadlinePageFragment(
+        fragment: Fragment
+    ): DeadlinePageFragment {
+        return fragment as DeadlinePageFragment
+    }
 }

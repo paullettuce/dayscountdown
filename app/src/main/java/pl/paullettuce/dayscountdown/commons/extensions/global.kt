@@ -1,4 +1,4 @@
-package pl.paullettuce.dayscountdown.commons
+package pl.paullettuce.dayscountdown.commons.extensions
 
 import android.util.Log
 

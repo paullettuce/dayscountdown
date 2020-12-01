@@ -7,11 +7,10 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:name="pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment"
-        android:id="@+id/deadline_page_fragment"
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:tag="DeadlinePageFragment"/>
+        android:name="pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment"
+        android:layout_height="match_parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,10 +10,11 @@ import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class DeadlinePagePresenter @Inject constructor(
+class DeadlinePagePresenter
+@Inject constructor(
     private val view: DeadlinePageContract.View,
     private val notificationManager: AppNotificationManager
-): DeadlinePageContract.Presenter {
+) : DeadlinePageContract.Presenter {
     private val deadline = Deadline()
     private val reminderTimeUnits = listOf(
         TimeUnitToPluralRes(TimeUnit.DAYS, R.plurals.days),
