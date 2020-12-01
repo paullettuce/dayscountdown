@@ -1,5 +1,6 @@
 package pl.paullettuce.dayscountdown.di
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import dagger.Binds
 import dagger.Module
@@ -9,6 +10,7 @@ import dagger.hilt.android.components.FragmentComponent
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageContract
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePagePresenter
+import pl.paullettuce.dayscountdown.notfications.TimeUnitPluralizingAdapter
 
 @Module
 @InstallIn(FragmentComponent::class)
@@ -32,5 +34,19 @@ object DeadlinePageFragmentModule {
         fragment: Fragment
     ): DeadlinePageFragment {
         return fragment as DeadlinePageFragment
+    }
+
+    @Provides
+    fun provideContext(
+        fragment: Fragment
+    ): Context {
+        return fragment.requireContext()
+    }
+
+    @Provides
+    fun providePluralizingAdapter(
+        context: Context
+    ): TimeUnitPluralizingAdapter {
+        return TimeUnitPluralizingAdapter(context)
     }
 }

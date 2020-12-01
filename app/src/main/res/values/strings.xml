@@ -27,12 +27,8 @@
     <string name="mock_days">23</string>
     <string name="mock_picked_time">8:00</string>
     <string-array name="mock_things_to_do">
-        <item>add appropriate views for notifications time picking</item>
-        <item>replace notification everyday at with dropdown,add option for every hour/half hour </item>
         <item>style notifications</item>
         <item>pluralize timelfet</item>
-        <item>you will receive notification in 12hours toast</item>
-        <item>add koin or dagger (prefer dagger)</item>
         <item>things to do (adding, moving, checking, delet)</item>
         <item>add room db for deadline, notificaiton and things todo</item>
         <item>add time ticking function</item>

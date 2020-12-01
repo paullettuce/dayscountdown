@@ -22,13 +22,13 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
     DeadlinePageContract.View {
 
     @Inject lateinit var presenter: DeadlinePageContract.Presenter
-    var adapter: TimeUnitPluralizingAdapter? = null
+    @Inject lateinit var adapter: TimeUnitPluralizingAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupReminderIntervalET()
-        createTimeUnitsAdapter()
+        setupReminderTimeUnitsSpinner()
         setListeners()
         presenter.initiate()
     }
@@ -48,11 +48,11 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
 
     override fun showReminderIntervalValue(intervalValue: Int) {
         reminderIntervalET.setValue(intervalValue)
-        adapter?.quantity = intervalValue
+        adapter.quantity = intervalValue
     }
 
     override fun showReminderTimeUnits(units: List<TimeUnitToPluralRes>, selectItemIndex: Int) {
-        adapter?.apply {
+        adapter.apply {
             clear()
             addAll(units)
         }
@@ -106,10 +106,7 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
         }
     }
 
-    private fun createTimeUnitsAdapter() {
-        adapter = context?.let {
-            TimeUnitPluralizingAdapter(it)
-        }
+    private fun setupReminderTimeUnitsSpinner() {
         reminderIntervalTimeUnitSpinner.adapter = adapter
     }
 
@@ -120,12 +117,8 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
 
     inner class ReminderIntervalValueChangeCallback : MinMaxEditText.OnChange {
         override fun onValueChange(number: Int) {
-            adapter?.quantity = number
+            adapter.quantity = number
             saveReminderInterval()
         }
-    }
-
-    companion object {
-        val TAG = "DeadlinePageFragment"
     }
 }
