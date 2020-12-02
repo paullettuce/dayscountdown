@@ -1,6 +1,5 @@
 package pl.paullettuce.dayscountdown.data
 
-import android.util.Log
 import pl.paullettuce.dayscountdown.commons.TimeUtil
 
 
@@ -23,7 +22,6 @@ class TimeLeft(private val milliseconds: Long) {
     }
 
     private fun calculateDays() {
-        Log.d("TImeLeft", "calculateDays: " + milliseconds)
         days = milliseconds / TimeUtil.oneDayAsMillis()
     }
 

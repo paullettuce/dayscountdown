@@ -3,11 +3,12 @@ package pl.paullettuce.dayscountdown.notfications
 import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
-import pl.paullettuce.dayscountdown.notfications.work.ReminderPeriodicWorkRequest
+import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.notfications.reminder.work.ReminderPeriodicWorkRequest
 
 object NotificationsScheduler {
 
-    private const val REMINDERS_UNIQUE_WORK_NAME = "REMINDERS_UNIQUE_WORK_NAME"
+    private const val REMINDERS_UNIQUE_WORK_NAME_PREFIX = "REMINDERS_UNIQUE_WORK_NAME"
 
     fun scheduleReminders(context: Context, deadlineId: Long, interval: ReminderRepeatInterval) {
         val request = ReminderPeriodicWorkRequest(deadlineId, interval)
@@ -23,5 +24,5 @@ object NotificationsScheduler {
     }
 
     private fun createUniqueWorkName(deadlineId: Long) =
-        REMINDERS_UNIQUE_WORK_NAME + "_deadline_id=$deadlineId"
+        REMINDERS_UNIQUE_WORK_NAME_PREFIX + "_deadline_id=$deadlineId"
 }

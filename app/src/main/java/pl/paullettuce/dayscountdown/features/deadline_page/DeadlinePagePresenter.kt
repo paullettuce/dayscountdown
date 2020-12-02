@@ -6,7 +6,7 @@ import pl.paullettuce.dayscountdown.commons.TimeUtil
 import pl.paullettuce.dayscountdown.data.Deadline
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManager
-import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -57,7 +57,8 @@ class DeadlinePagePresenter
     }
 
     private fun scheduleNotifications() {
-        notificationManager.scheduleReminders(deadline.getId(), ReminderRepeatInterval.default())
+//        notificationManager.scheduleReminders(deadline.getId(), ReminderRepeatInterval.default())
+        notificationManager.showInstantNotification(deadline.getData())
     }
 
     private fun disableNotifications() {

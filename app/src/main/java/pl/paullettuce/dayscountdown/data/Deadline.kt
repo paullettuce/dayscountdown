@@ -1,7 +1,7 @@
 package pl.paullettuce.dayscountdown.data
 
 import pl.paullettuce.dayscountdown.commons.TimeFormatter
-import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
 
 class Deadline {
 
@@ -30,4 +30,6 @@ class Deadline {
     }
 
     fun getReminderRepeatInterval() = deadlineData.reminderRepeatInterval
+
+    fun getData() = deadlineData
 }

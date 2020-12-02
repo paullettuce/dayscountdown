@@ -2,7 +2,7 @@ package pl.paullettuce.dayscountdown.features.deadline_page
 
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.data.ToDoItem
-import pl.paullettuce.dayscountdown.notfications.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
 
 interface DeadlinePageContract {
     interface View {

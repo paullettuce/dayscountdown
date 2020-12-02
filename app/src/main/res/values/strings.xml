@@ -15,9 +15,7 @@
         <item quantity="other">hours</item>
     </plurals>
 
-
-    <string name="notification_title">Title</string>
-    <string name="notification_content">Content</string>
+    <string name="deadline_reminder_title">Deadline is coming!</string>
 
     <string name="days_hours">%1$d days\n%2$d hours</string>
     <string name="hours_minutes">%1$d hours\n%2$d minutes</string>

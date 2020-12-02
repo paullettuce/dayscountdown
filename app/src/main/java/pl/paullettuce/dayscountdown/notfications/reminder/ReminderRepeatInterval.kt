@@ -1,4 +1,4 @@
-package pl.paullettuce.dayscountdown.notfications
+package pl.paullettuce.dayscountdown.notfications.reminder
 
 import java.util.concurrent.TimeUnit
 
@@ -11,6 +11,10 @@ data class ReminderRepeatInterval(
     }
 
     companion object SimpleFactory {
-        fun default() = ReminderRepeatInterval(131, TimeUnit.HOURS)
+        fun default() =
+            ReminderRepeatInterval(
+                1,
+                TimeUnit.HOURS
+            )
     }
 }

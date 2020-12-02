@@ -12,7 +12,7 @@ import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MIN_VALUE
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.data.ToDoItem
 import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
-import pl.paullettuce.dayscountdown.notfications.TimeUnitPluralizingAdapter
+import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingAdapter
 import pl.paullettuce.dayscountdown.view.DateTimePicker
 import pl.paullettuce.dayscountdown.view.MinMaxEditText
 import javax.inject.Inject
