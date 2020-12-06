@@ -4,7 +4,7 @@ import android.content.Context
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.data.DeadlineData
 import pl.paullettuce.dayscountdown.data.TimeLeft
-import pl.paullettuce.dayscountdown.view.adapters.TimeLeftToPluralizedStringAdapter
+import pl.paullettuce.dayscountdown.view.adapters.TimeLeftStringBuilder
 
 abstract class NotificationContentFactory {
     abstract fun buildContent(): NotificationContent
@@ -14,7 +14,8 @@ class ReminderContentFactory(
     private val context: Context,
     private val deadlineData: DeadlineData
 ) : NotificationContentFactory() {
-    private val timeLeftAdapter = TimeLeftToPluralizedStringAdapter(context, displayedUnitsLimit = 2)
+    private val timeLeftAdapter =
+        TimeLeftStringBuilder(context, displayedUnitsLimit = 2)
     private val timeLeft = TimeLeft.betweenNowAndTimestamp(deadlineData.datetimeTimestamp)
 
     override fun buildContent(): NotificationContent {
@@ -42,5 +43,7 @@ class ReminderContentFactory(
         return sb.toString()
     }
 
-    private fun getTimeLeftFormatted() = timeLeftAdapter.toPluralString(timeLeft)
+    private fun getTimeLeftFormatted(): String {
+        return context.getString(R.string.time_left, timeLeftAdapter.toPluralString(timeLeft))
+    }
 }

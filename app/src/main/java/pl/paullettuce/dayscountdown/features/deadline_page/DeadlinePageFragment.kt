@@ -64,19 +64,8 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
         (thingsToDoRV.adapter as ToDoAdapter).setItems(todolist)
     }
 
-    override fun showDaysAndHours(days: Long, hours: Long) {
-        val text = getString(R.string.days_hours, days, hours)
-        timeLeftTV.text = text
-    }
-
-    override fun showHoursAndMinutes(hours: Long, minutes: Long) {
-        val text = getString(R.string.hours_minutes, hours, minutes)
-        timeLeftTV.text = text
-    }
-
-    override fun showMinutes(minutes: Long) {
-        val text = getString(R.string.minutes, minutes)
-        timeLeftTV.text = text
+    override fun showTimeLeftString(timeLeftString: String) {
+        timeLeftTV.text = timeLeftString
     }
 
     private fun saveReminderInterval() {

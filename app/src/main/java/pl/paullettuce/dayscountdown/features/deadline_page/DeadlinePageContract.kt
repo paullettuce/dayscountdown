@@ -7,9 +7,7 @@ import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
 interface DeadlinePageContract {
     interface View {
         fun showDeadlineDate(friendlyDatetime: String)
-        fun showDaysAndHours(days: Long, hours: Long)
-        fun showHoursAndMinutes(hours: Long, minutes: Long)
-        fun showMinutes(minutes: Long)
+        fun showTimeLeftString(timeLeftString: String)
         fun showReminderIntervalValue(intervalValue: Int)
         fun showReminderTimeUnits(units: List<TimeUnitToPluralRes>, selectItemIndex: Int)
         fun showThingsToDo(list: List<ToDoItem>)

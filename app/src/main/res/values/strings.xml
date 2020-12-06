@@ -20,7 +20,7 @@
     </plurals>
 
     <string name="deadline_reminder_title">Deadline is coming!</string>
-    <string name="time_left">"Time left: "</string>
+    <string name="time_left">"Time left: %s"</string>
 
     <string name="days_hours">%1$d days\n%2$d hours</string>
     <string name="hours_minutes">%1$d hours\n%2$d minutes</string>

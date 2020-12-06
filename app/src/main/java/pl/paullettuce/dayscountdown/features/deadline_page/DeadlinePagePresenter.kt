@@ -8,13 +8,15 @@ import pl.paullettuce.dayscountdown.data.TimeLeft
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManager
 import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.view.adapters.TimeLeftStringBuilder
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class DeadlinePagePresenter
 @Inject constructor(
     private val view: DeadlinePageContract.View,
-    private val notificationManager: AppNotificationManager
+    private val notificationManager: AppNotificationManager,
+    private val timeLeftStringBuilder: TimeLeftStringBuilder
 ) : DeadlinePageContract.Presenter {
     private val deadline = Deadline()
     private val reminderTimeUnits = listOf(
@@ -58,8 +60,7 @@ class DeadlinePagePresenter
     }
 
     private fun scheduleNotifications() {
-//        notificationManager.scheduleReminders(deadline.getId(), ReminderRepeatInterval.default())
-        notificationManager.showInstantNotification(deadline.getData())
+        notificationManager.scheduleReminders(deadline.getId(), deadline.getReminderRepeatInterval())
     }
 
     private fun disableNotifications() {
@@ -83,17 +84,7 @@ class DeadlinePagePresenter
     private fun showDaysLeft() {
         val deadlineDatetime = deadline.getDeadlineDatetime()
         val timeLeft = TimeLeft.betweenNowAndTimestamp(deadlineDatetime)
-        when {
-            timeLeft.days > 0 -> {
-                view.showDaysAndHours(timeLeft.days, timeLeft.hours)
-            }
-            timeLeft.hours > 0 -> {
-                view.showHoursAndMinutes(timeLeft.hours, timeLeft.minutes)
-            }
-            else -> {
-                view.showMinutes(timeLeft.minutes)
-            }
-        }
+        view.showTimeLeftString(timeLeftStringBuilder.toPluralString(timeLeft))
     }
 
     private fun showReminderInterval() {

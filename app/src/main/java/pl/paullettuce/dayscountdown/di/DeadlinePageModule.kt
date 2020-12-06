@@ -11,6 +11,8 @@ import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageContract
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePagePresenter
 import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingListAdapter
+import pl.paullettuce.dayscountdown.view.adapters.Separator
+import pl.paullettuce.dayscountdown.view.adapters.TimeLeftStringBuilder
 
 @Module
 @InstallIn(FragmentComponent::class)
@@ -49,6 +51,17 @@ object DeadlinePageFragmentModule {
     ): TimeUnitPluralizingListAdapter {
         return TimeUnitPluralizingListAdapter(
             context
+        )
+    }
+
+    @Provides
+    fun provideTimeLeftToPluralizedStringAdapter(
+        context: Context
+    ): TimeLeftStringBuilder {
+        return TimeLeftStringBuilder(
+            context,
+            displayedUnitsLimit = 3,
+            unitsSeparator = Separator.NewLine()
         )
     }
 }
