@@ -10,7 +10,7 @@ import dagger.hilt.android.components.FragmentComponent
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageContract
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePagePresenter
-import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingAdapter
+import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingListAdapter
 
 @Module
 @InstallIn(FragmentComponent::class)
@@ -46,8 +46,8 @@ object DeadlinePageFragmentModule {
     @Provides
     fun providePluralizingAdapter(
         context: Context
-    ): TimeUnitPluralizingAdapter {
-        return TimeUnitPluralizingAdapter(
+    ): TimeUnitPluralizingListAdapter {
+        return TimeUnitPluralizingListAdapter(
             context
         )
     }

@@ -3,7 +3,8 @@ package pl.paullettuce.dayscountdown.data
 import pl.paullettuce.dayscountdown.commons.TimeUtil
 
 
-class TimeLeft(private val milliseconds: Long) {
+class TimeLeft
+private constructor(private val millisLeft: Long) {
     var days: Long = 0
         private set
     var hours: Long = 0
@@ -22,14 +23,21 @@ class TimeLeft(private val milliseconds: Long) {
     }
 
     private fun calculateDays() {
-        days = milliseconds / TimeUtil.oneDayAsMillis()
+        days = millisLeft / TimeUtil.oneDayAsMillis()
     }
 
     private fun calculateHours() {
-        hours = (milliseconds - TimeUtil.daysToMills(days)) / TimeUtil.oneHourAsMillis()
+        hours = (millisLeft - TimeUtil.daysToMills(days)) / TimeUtil.oneHourAsMillis()
     }
 
     private fun calculateMinutes() {
-        minutes = (milliseconds - TimeUtil.daysToMills(days) - TimeUtil.hoursToMills(hours)) / TimeUtil.oneMinuteAsMillis()
+        minutes = (millisLeft - TimeUtil.daysToMills(days) - TimeUtil.hoursToMills(hours)) / TimeUtil.oneMinuteAsMillis()
+    }
+
+    companion object {
+        fun betweenNowAndTimestamp(timestamp: Long): TimeLeft {
+            val millisLeft = TimeUtil.millisToTimestampSinceNow(timestamp)
+            return TimeLeft(millisLeft)
+        }
     }
 }

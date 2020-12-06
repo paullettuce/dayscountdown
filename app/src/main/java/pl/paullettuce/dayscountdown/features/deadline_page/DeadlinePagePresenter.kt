@@ -4,6 +4,7 @@ import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.commons.TimeFormatter
 import pl.paullettuce.dayscountdown.commons.TimeUtil
 import pl.paullettuce.dayscountdown.data.Deadline
+import pl.paullettuce.dayscountdown.data.TimeLeft
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManager
 import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
@@ -81,8 +82,7 @@ class DeadlinePagePresenter
 
     private fun showDaysLeft() {
         val deadlineDatetime = deadline.getDeadlineDatetime()
-        val timeLeft = TimeUtil.timeBetween(deadlineDatetime, TimeUtil.nowMillis())
-
+        val timeLeft = TimeLeft.betweenNowAndTimestamp(deadlineDatetime)
         when {
             timeLeft.days > 0 -> {
                 view.showDaysAndHours(timeLeft.days, timeLeft.hours)

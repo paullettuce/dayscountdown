@@ -12,7 +12,7 @@ import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MIN_VALUE
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.data.ToDoItem
 import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
-import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingAdapter
+import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingListAdapter
 import pl.paullettuce.dayscountdown.view.DateTimePicker
 import pl.paullettuce.dayscountdown.view.MinMaxEditText
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
     DeadlinePageContract.View {
 
     @Inject lateinit var presenter: DeadlinePageContract.Presenter
-    @Inject lateinit var adapter: TimeUnitPluralizingAdapter
+    @Inject lateinit var listAdapter: TimeUnitPluralizingListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,11 +48,11 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
 
     override fun showReminderIntervalValue(intervalValue: Int) {
         reminderIntervalET.setValue(intervalValue)
-        adapter.quantity = intervalValue
+        listAdapter.quantity = intervalValue
     }
 
     override fun showReminderTimeUnits(units: List<TimeUnitToPluralRes>, selectItemIndex: Int) {
-        adapter.apply {
+        listAdapter.apply {
             clear()
             addAll(units)
         }
@@ -107,7 +107,7 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
     }
 
     private fun setupReminderTimeUnitsSpinner() {
-        reminderIntervalTimeUnitSpinner.adapter = adapter
+        reminderIntervalTimeUnitSpinner.adapter = listAdapter
     }
 
     private fun setupReminderIntervalET() {
@@ -117,7 +117,7 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
 
     inner class ReminderIntervalValueChangeCallback : MinMaxEditText.OnChange {
         override fun onValueChange(number: Int) {
-            adapter.quantity = number
+            listAdapter.quantity = number
             saveReminderInterval()
         }
     }

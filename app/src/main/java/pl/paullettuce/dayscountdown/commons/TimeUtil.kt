@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import pl.paullettuce.dayscountdown.data.TimeLeft
+import java.sql.Timestamp
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -20,15 +21,9 @@ object TimeUtil {
         return odt.offset
     }
 
-    fun timeBetween(datetime1: Long, datetime2: Long): TimeLeft {
-        Log.d(TAG, "timeBetween, time1: $datetime1, time2: $datetime2")
-        if (datetime1 == 0L || datetime2 == 0L) return TimeLeft(0)
-        val millisBetween = if (datetime1 > datetime2) {
-            datetime1 - datetime2
-        } else {
-            datetime2 - datetime1
-        }
-        return TimeLeft(millisBetween)
+    fun millisToTimestampSinceNow(timestamp: Long): Long {
+        val nowMillis = nowMillis()
+        return (timestamp - nowMillis).coerceAtLeast(0)
     }
 
     fun oneDayAsMillis() = 24 * oneHourAsMillis()

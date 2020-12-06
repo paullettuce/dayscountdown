@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 
-class TimeUnitPluralizingAdapter(
+class TimeUnitPluralizingListAdapter(
     context: Context,
     private val items: MutableList<TimeUnitToPluralRes> = mutableListOf()
 ) : ArrayAdapter<TimeUnitToPluralRes>(context, android.R.layout.simple_spinner_item, items) {
