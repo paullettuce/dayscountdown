@@ -2,13 +2,16 @@ package pl.paullettuce.dayscountdown.features.deadline_page
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_deadline_page.*
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MAX_VALUE
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MIN_VALUE
+import pl.paullettuce.dayscountdown.commons.RecyclerViewMargin
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.data.ToDoItem
 import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
@@ -18,11 +21,15 @@ import pl.paullettuce.dayscountdown.view.MinMaxEditText
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
-    DeadlinePageContract.View {
+class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
+    DeadlinePageContract.View, ToDoAdapter.Interaction {
 
-    @Inject lateinit var presenter: DeadlinePageContract.Presenter
-    @Inject lateinit var listAdapter: TimeUnitPluralizingListAdapter
+    @Inject
+    lateinit var presenter: DeadlinePageContract.Presenter
+
+    @Inject
+    lateinit var timeUnitsSpinnerAdapter: TimeUnitPluralizingListAdapter
+    lateinit var thingsToDoAdapter: ToDoAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,11 +55,11 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
 
     override fun showReminderIntervalValue(intervalValue: Int) {
         reminderIntervalET.setValue(intervalValue)
-        listAdapter.quantity = intervalValue
+        timeUnitsSpinnerAdapter.quantity = intervalValue
     }
 
     override fun showReminderTimeUnits(units: List<TimeUnitToPluralRes>, selectItemIndex: Int) {
-        listAdapter.apply {
+        timeUnitsSpinnerAdapter.apply {
             clear()
             addAll(units)
         }
@@ -62,6 +69,18 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
     override fun showThingsToDo(list: List<ToDoItem>) {
         val todolist = resources.getStringArray(R.array.mock_things_to_do).map { ToDoItem(it) }
         (thingsToDoRV.adapter as ToDoAdapter).setItems(todolist)
+    }
+
+    override fun createNewToDoItem(text: String) {
+        Toast.makeText(context, "addItem: $text", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun markAsDone(item: ToDoItem) {
+
+    }
+
+    override fun delete(item: ToDoItem) {
+
     }
 
     override fun showTimeLeftString(timeLeftString: String) {
@@ -79,11 +98,17 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
 //    }
 
     private fun setupRecyclerView() {
+        thingsToDoAdapter = ToDoAdapter(this)
         thingsToDoRV.layoutManager = LinearLayoutManager(this.context)
-        thingsToDoRV.adapter =
-            ToDoAdapter(
-                emptyList()
-            )
+        thingsToDoRV.adapter = thingsToDoAdapter
+        thingsToDoRV.addItemDecoration(
+            RecyclerViewMargin(verticalMarginDp = R.dimen.recycler_view_item_margin)
+        )
+        thingsToDoAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                thingsToDoRV.scrollToPosition(0)
+            }
+        })
     }
 
     private fun setListeners() {
@@ -93,10 +118,13 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
         reminderCheckbox.setOnCheckedChangeListener { _, isChecked ->
             presenter.toggleNotifications(isChecked, 1L)
         }
+        addToDoItemBtn.setOnClickListener {
+            thingsToDoAdapter.insertEmptyItem()
+        }
     }
 
     private fun setupReminderTimeUnitsSpinner() {
-        reminderIntervalTimeUnitSpinner.adapter = listAdapter
+        reminderIntervalTimeUnitSpinner.adapter = timeUnitsSpinnerAdapter
     }
 
     private fun setupReminderIntervalET() {
@@ -106,7 +134,7 @@ class DeadlinePageFragment: Fragment(R.layout.fragment_deadline_page),
 
     inner class ReminderIntervalValueChangeCallback : MinMaxEditText.OnChange {
         override fun onValueChange(number: Int) {
-            listAdapter.quantity = number
+            timeUnitsSpinnerAdapter.quantity = number
             saveReminderInterval()
         }
     }

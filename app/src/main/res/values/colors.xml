@@ -9,5 +9,7 @@
     <color name="inactiveTextColor">#959595</color>
 
     <color name="pickboxBackgroundColor">#14000000</color>
+    <color name="todo_edit_item_bg_color">#EFEFEF</color>
+    <color name="border_color">#383838</color>
 
 </resources>

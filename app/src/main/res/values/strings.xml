@@ -2,8 +2,6 @@
     <string name="app_name">Deadline App</string>
 
     <string name="days_to">Deadline at</string>
-    <string name="things_to_do">Things to do</string>
-
 
     <string name="notification_checkbox_text">Notification every</string>
     <plurals name="days">
@@ -22,15 +20,13 @@
     <string name="deadline_reminder_title">Deadline is coming!</string>
     <string name="time_left">"Time left: %s"</string>
 
-    <string name="days_hours">%1$d days\n%2$d hours</string>
-    <string name="hours_minutes">%1$d hours\n%2$d minutes</string>
-    <string name="minutes">%1$d minutes</string>
+    <string name="things_to_do">Things to do</string>
+    <string name="new_todo_hint">Enter todo name here</string>
 
     <string name="mock_picked_datetime">11-07-2020 12:30</string>
     <string name="mock_days">23</string>
     <string name="mock_picked_time">8:00</string>
     <string-array name="mock_things_to_do">
-        <item>pluralize timelfet</item>
         <item>things to do (adding, moving, checking, delet)</item>
         <item>figure out what to do when deadline time has passed</item>
         <item>add room db for deadline, notificaiton and things todo</item>
