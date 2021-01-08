@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#C3C3C3</color>
-    <color name="colorAccent">#434343</color>
+    <color name="colorAccent">#5C026C</color>
 
     <color name="textColor">#99000000</color>
     <color name="textColorImportant">#DE000000</color>
@@ -12,4 +12,6 @@
     <color name="todo_edit_item_bg_color">#EFEFEF</color>
     <color name="border_color">#383838</color>
 
+    <color name="bg_mark_as_done">#5582A6</color>
+    <color name="bg_delete">#7B0A0A</color>
 </resources>

@@ -36,5 +36,6 @@
         <item>possibly add animation for minutes passing</item>
         <item>sound in app enabled checkbox, shoosh for minute, gong for hour</item>
         <item>every hour notification with a gong sound</item>
+        <item>swipelayout github readme</item>
     </string-array>
 </resources>

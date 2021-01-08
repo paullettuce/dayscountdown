@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<pl.paullettuce.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="@dimen/todo_item_height"
-    >
+    android:layout_height="@dimen/list_item_height"
+    android:minHeight="@dimen/todo_item_height">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_mark_as_done">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="done" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_delete">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="delete" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/todoTV"
-        android:layout_marginStart="3dp"
-        android:padding="3dp"
-        android:textSize="15sp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="start|center_vertical"
+        android:textAlignment="gravity"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/text_size_medium" />
 
-</LinearLayout>
+</pl.paullettuce.SwipeLayout>

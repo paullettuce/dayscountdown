@@ -19,10 +19,12 @@ class ToDoAdapter(
     val DB_ITEM = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutParams = RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+        val lp = RecyclerView.LayoutParams(
+            parent.layoutParams.width,
+            parent.context.resources.getDimensionPixelSize(R.dimen.list_item_height))
         return when (viewType) {
-            EMPTY_ITEM -> EmptyEditTextViewHolder(parent.inflateLayout(R.layout.list_item_empty_edit_text, layoutParams))
-            DB_ITEM -> ToDoItemViewHolder(parent.inflateLayout(R.layout.list_item_to_do, layoutParams))
+            EMPTY_ITEM -> EmptyEditTextViewHolder(parent.inflateLayout(R.layout.list_item_empty_edit_text, lp))
+            DB_ITEM -> ToDoItemViewHolder(parent.inflateLayout(R.layout.list_item_to_do, lp))
             else -> throw IllegalArgumentException("There is no view type $viewType")
         }
     }
