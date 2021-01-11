@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pl.paullettuce.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeLayout"
+    android:background="@color/todo_edit_item_bg_color"
     android:layout_width="match_parent"
     android:layout_height="@dimen/todo_item_height"
     android:minHeight="@dimen/todo_item_height">
@@ -39,9 +40,13 @@
         android:id="@+id/todoTV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/todo_edit_item_bg_color"
         android:gravity="start|center_vertical"
         android:textAlignment="gravity"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
         android:textColor="@color/textColor"
         android:textSize="@dimen/text_size_medium" />
 

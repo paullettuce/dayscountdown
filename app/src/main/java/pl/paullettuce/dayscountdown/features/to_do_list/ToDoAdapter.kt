@@ -2,14 +2,13 @@ package pl.paullettuce.dayscountdown.features.to_do_list
 
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_empty_edit_text.view.*
 import kotlinx.android.synthetic.main.list_item_to_do.view.*
 import pl.paullettuce.SwipeLayout
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.commons.extensions.inflateLayout
+import pl.paullettuce.dayscountdown.commons.extensions.showStrikeThrough
 import pl.paullettuce.dayscountdown.data.ToDoItem
 
 class ToDoAdapter(
@@ -60,9 +59,10 @@ class ToDoAdapter(
         notifyItemRemoved(position)
     }
 
-    fun markAsDone(position: Int) {
-        (items[position] as? ToDoItem)?.done = true
-        notifyItemChanged(position)
+    fun toggleDone(indexOf: Int) {
+        val item = items[indexOf] as ToDoItem
+        item.done = !item.done
+        notifyItemChanged(indexOf)
     }
 
     private fun replaceAtPositionWith(position: Int, toDoItem: ToDoItem) {
@@ -73,21 +73,22 @@ class ToDoAdapter(
     private inner class ToDoItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(item: ToDoItem) {
             itemView.todoTV.text = item.text
+            itemView.swipeLayout.reset()
             itemView.swipeLayout.swipeListener = object : SwipeLayout.SwipeListener {
                 override fun swipedToLeft() {
                     delete(adapterPosition)
                 }
 
                 override fun swipedToRight() {
-                    markAsDone(adapterPosition)
+                    toggleDone(adapterPosition)
                 }
             }
-            if (item.done) itemView.setBackgroundColor(itemView.context.getColor(R.color.inactiveTextColor))
-            else itemView.background = null
+            itemView.todoTV.showStrikeThrough(item.done)
         }
     }
 
-    private inner class EmptyEditTextViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private inner class EmptyEditTextViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
         fun bindView(interaction: Interaction) {
             itemView.saveBtn.setOnClickListener {
                 val todoItemText = itemView.todoEditText.text.toString()
