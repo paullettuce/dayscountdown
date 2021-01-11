@@ -79,6 +79,10 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         Toast.makeText(context, "done", Toast.LENGTH_SHORT).show()
     }
 
+    override fun markAsNotDone(item: ToDoItem) {
+        Toast.makeText(context, "not done", Toast.LENGTH_SHORT).show()
+    }
+
     override fun delete(item: ToDoItem) {
         Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show()
     }
@@ -106,7 +110,7 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         )
         thingsToDoAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                thingsToDoRV.scrollToPosition(0)
+                scrollToTodoListStart()
             }
         })
     }
@@ -119,8 +123,13 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
             presenter.toggleNotifications(isChecked, 1L)
         }
         addToDoItemBtn.setOnClickListener {
-            thingsToDoAdapter.insertEmptyItem()
+            val alreadyHadEmptyItem = !thingsToDoAdapter.insertEmptyItem()
+            if (alreadyHadEmptyItem) scrollToTodoListStart()
         }
+    }
+
+    private fun scrollToTodoListStart() {
+        thingsToDoRV.scrollToPosition(0)
     }
 
     private fun setupReminderTimeUnitsSpinner() {

@@ -43,11 +43,16 @@ class ToDoAdapter(
         }
     }
 
-    fun insertEmptyItem() {
+    /**
+     * @return true if item was inserted, false if not
+     */
+    fun insertEmptyItem(): Boolean {
         if (!hasHeaderItem()) {
             items.add(0, EmptyToDoItem())
             notifyItemInserted(0)
+            return true
         }
+        return false
     }
 
     fun setItems(items: List<ToDoItem>) {
@@ -56,14 +61,21 @@ class ToDoAdapter(
         notifyDataSetChanged()
     }
 
-    fun delete(position: Int) {
+    private fun delete(position: Int) {
+        interaction.delete(items[position] as ToDoItem)
         items.removeAt(position)
         notifyItemRemoved(position)
     }
 
-    fun toggleDone(indexOf: Int) {
+    private fun toggleDone(indexOf: Int) {
         val item = items[indexOf] as ToDoItem
-        item.done = !item.done
+        if (item.done) {
+            interaction.markAsNotDone(item)
+            item.done = false
+        } else {
+            interaction.markAsDone(item)
+            item.done = true
+        }
         notifyItemChanged(indexOf)
     }
 
@@ -74,13 +86,8 @@ class ToDoAdapter(
             itemView.todoTV.text = item.text
             itemView.swipeLayout.reset()
             itemView.swipeLayout.swipeListener = object : SwipeLayout.SwipeListener {
-                override fun swipedToLeft() {
-                    delete(adapterPosition)
-                }
-
-                override fun swipedToRight() {
-                    toggleDone(adapterPosition)
-                }
+                override fun swipedToLeft() = delete(adapterPosition)
+                override fun swipedToRight() = toggleDone(adapterPosition)
             }
             itemView.todoTV.showStrikeThrough(item.done)
         }
@@ -99,6 +106,7 @@ class ToDoAdapter(
     interface Interaction {
         fun createNewToDoItem(text: String)
         fun markAsDone(item: ToDoItem)
+        fun markAsNotDone(item: ToDoItem)
         fun delete(item: ToDoItem)
     }
 }
