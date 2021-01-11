@@ -13,7 +13,7 @@ import pl.paullettuce.dayscountdown.commons.extensions.hideKeyboard
 import pl.paullettuce.dayscountdown.commons.extensions.inflateLayout
 import pl.paullettuce.dayscountdown.commons.extensions.makeLSlightlyTransparent
 import pl.paullettuce.dayscountdown.commons.extensions.showStrikeThrough
-import pl.paullettuce.dayscountdown.data.ToDoItem
+import pl.paullettuce.dayscountdown.storage.entity.ToDoItem
 
 class ToDoAdapter(
     private val interaction: Interaction,

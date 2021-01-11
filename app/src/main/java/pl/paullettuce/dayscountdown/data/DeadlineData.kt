@@ -1,6 +1,7 @@
 package pl.paullettuce.dayscountdown.data
 
 import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.storage.entity.ToDoItem
 
 data class DeadlineData(
     var id: Long = 0,

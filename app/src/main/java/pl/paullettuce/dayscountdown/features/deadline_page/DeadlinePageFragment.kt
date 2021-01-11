@@ -13,7 +13,7 @@ import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MAX_VALUE
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MIN_VALUE
 import pl.paullettuce.dayscountdown.commons.RecyclerViewMargin
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
-import pl.paullettuce.dayscountdown.data.ToDoItem
+import pl.paullettuce.dayscountdown.storage.entity.ToDoItem
 import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
 import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingListAdapter
 import pl.paullettuce.dayscountdown.view.DateTimePicker
@@ -67,7 +67,11 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
     }
 
     override fun showThingsToDo(list: List<ToDoItem>) {
-        val todolist = resources.getStringArray(R.array.mock_things_to_do).map { ToDoItem(it) }
+        val todolist = resources.getStringArray(R.array.mock_things_to_do).map {
+            ToDoItem(
+                it
+            )
+        }
         (thingsToDoRV.adapter as ToDoAdapter).setItems(todolist)
     }
 
