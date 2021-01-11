@@ -1,39 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<pl.paullettuce.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/newItemSwipeLayout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/todo_item_height"
     android:minHeight="@dimen/todo_item_height"
-    android:background="@color/todo_edit_item_bg_color">
+    app:swipeEnabled="toLeft">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/todoEditText"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:background="@null"
-        android:hint="@string/new_todo_hint"
-        android:inputType="textNoSuggestions"
-        android:padding="3dp"
-        android:textAlignment="viewStart"
-        android:textSize="15sp"
-        android:imeOptions="actionDone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/saveBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/bg_delete">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_margin="5dp"
-        android:background="@drawable/bordered_rounded_box"
-        android:elevation="0dp"
-        android:text="SAVE"
-        android:textColor="@color/textColor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/deleteIV"
+            android:layout_width="@dimen/swipe_layout_icon_size"
+            android:layout_height="@dimen/swipe_layout_icon_size"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/swipe_layout_icon_margin"
+            android:src="@drawable/ic_trash"
+            app:tint="@color/white" />
+    </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/todo_edit_item_bg_color">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/todoEditText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="3dp"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:hint="@string/new_todo_hint"
+            android:imeOptions="actionDone"
+            android:inputType="textNoSuggestions"
+            android:maxLines="2"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:textAlignment="gravity"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintEnd_toStartOf="@id/saveBtn"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/bordered_rounded_box"
+            android:elevation="0dp"
+            android:text="@string/save"
+            android:textColor="@color/textColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</pl.paullettuce.SwipeLayout>

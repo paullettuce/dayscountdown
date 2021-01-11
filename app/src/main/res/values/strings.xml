@@ -26,8 +26,8 @@
     <string name="mock_picked_datetime">11-07-2020 12:30</string>
     <string name="mock_days">23</string>
     <string name="mock_picked_time">8:00</string>
+    <string name="save">SAVE</string>
     <string-array name="mock_things_to_do">
-        <item>new empty item as swipe layout with delete only</item>
         <item>add room db for todos, deadline, notificaiton</item>
         <item>use usecases</item>
         <item>reorganize packages accordingly to layers(presentation, storage, domain)</item>

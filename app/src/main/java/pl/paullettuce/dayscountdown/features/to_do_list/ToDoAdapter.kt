@@ -91,6 +91,13 @@ class ToDoAdapter(
 
     private fun hasHeaderItem() = items[0] is EmptyToDoItem
 
+    private fun deleteHeaderItem() {
+        if (hasHeaderItem()) {
+            items.removeAt(0)
+            notifyItemRemoved(0)
+        }
+    }
+
     private inner class ToDoItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(item: ToDoItem) {
             itemView.todoTV.text = item.text
@@ -126,6 +133,12 @@ class ToDoAdapter(
                     return@setOnEditorActionListener true
                 }
                 return@setOnEditorActionListener false
+            }
+            itemView.newItemSwipeLayout.reset()
+            itemView.newItemSwipeLayout.swipeListener = object : SwipeLayout.SwipeListener {
+                override fun swipedToLeft() = deleteHeaderItem()
+
+                override fun swipedToRight() { }
             }
         }
 
