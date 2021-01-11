@@ -27,12 +27,11 @@
     <string name="mock_days">23</string>
     <string name="mock_picked_time">8:00</string>
     <string-array name="mock_things_to_do">
-        <item>things to do (adding, checking, delet)</item>
         <item>new empty item as swipe layout with delete only</item>
-        <item>reorganize packages accordingly to layers(presentation, storage, domain)</item>
+        <item>add room db for todos, deadline, notificaiton</item>
         <item>use usecases</item>
+        <item>reorganize packages accordingly to layers(presentation, storage, domain)</item>
         <item>figure out what to do when deadline time has passed</item>
-        <item>add room db for deadline, notificaiton and things todo</item>
         <item>add time ticking function</item>
         <item>possibly add animation for minutes passing</item>
         <item>sound in app enabled checkbox, shoosh for minute, gong for hour</item>

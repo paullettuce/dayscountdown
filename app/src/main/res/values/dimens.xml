@@ -8,4 +8,7 @@
 
     <dimen name="recycler_view_item_margin">2dp</dimen>
     <dimen name="todo_item_height">45dp</dimen>
+
+    <dimen name="swipe_layout_icon_size">20dp</dimen>
+    <dimen name="swipe_layout_icon_margin">10dp</dimen>
 </resources>

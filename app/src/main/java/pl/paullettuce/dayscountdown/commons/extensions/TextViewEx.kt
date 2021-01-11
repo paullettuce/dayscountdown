@@ -8,3 +8,7 @@ fun TextView.showStrikeThrough(show: Boolean) {
         if (show) Paint.ANTI_ALIAS_FLAG or Paint.STRIKE_THRU_TEXT_FLAG
         else Paint.ANTI_ALIAS_FLAG and Paint.STRIKE_THRU_TEXT_FLAG.inv()
 }
+
+fun TextView.makeLSlightlyTransparent(shouldBeOpaque: Boolean) {
+    alpha = if (shouldBeOpaque) 0.6f else 1f
+}

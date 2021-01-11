@@ -17,6 +17,7 @@
         android:padding="3dp"
         android:textAlignment="viewStart"
         android:textSize="15sp"
+        android:imeOptions="actionDone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/saveBtn"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pl.paullettuce.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipeLayout"
-    android:background="@color/todo_edit_item_bg_color"
     android:layout_width="match_parent"
     android:layout_height="@dimen/todo_item_height"
     android:minHeight="@dimen/todo_item_height">
@@ -11,14 +11,17 @@
         android:layout_height="match_parent"
         android:background="@color/bg_mark_as_done">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
+        <ImageView
+            android:id="@+id/doneIV"
+            android:layout_width="@dimen/swipe_layout_icon_size"
+            android:layout_height="@dimen/swipe_layout_icon_size"
+            android:src="@drawable/ic_done"
+            app:tint="@color/white"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="done" />
+            android:layout_marginStart="@dimen/swipe_layout_icon_margin"
+            />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -26,14 +29,16 @@
         android:layout_height="match_parent"
         android:background="@color/bg_delete">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+        <ImageView
+            android:id="@+id/deleteIV"
+            android:layout_width="@dimen/swipe_layout_icon_size"
+            android:layout_height="@dimen/swipe_layout_icon_size"
+            android:src="@drawable/ic_trash"
+            app:tint="@color/white"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:text="delete" />
+            android:layout_marginEnd="@dimen/swipe_layout_icon_margin"
+            />
     </RelativeLayout>
 
     <TextView

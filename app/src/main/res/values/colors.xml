@@ -13,6 +13,6 @@
     <color name="border_color">#383838</color>
 
     <color name="bg_mark_as_done">#5582A6</color>
-    <color name="bg_delete">#7B0A0A</color>
+    <color name="bg_delete">#910404</color>
     <color name="white">#FFFFFF</color>
 </resources>

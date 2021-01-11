@@ -2,12 +2,16 @@ package pl.paullettuce.dayscountdown.features.to_do_list
 
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_empty_edit_text.view.*
 import kotlinx.android.synthetic.main.list_item_to_do.view.*
 import pl.paullettuce.SwipeLayout
 import pl.paullettuce.dayscountdown.R
+import pl.paullettuce.dayscountdown.commons.extensions.hideKeyboard
 import pl.paullettuce.dayscountdown.commons.extensions.inflateLayout
+import pl.paullettuce.dayscountdown.commons.extensions.makeLSlightlyTransparent
 import pl.paullettuce.dayscountdown.commons.extensions.showStrikeThrough
 import pl.paullettuce.dayscountdown.data.ToDoItem
 
@@ -20,8 +24,14 @@ class ToDoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            EMPTY_ITEM_TYPE -> EmptyEditTextViewHolder(parent.inflateLayout(R.layout.list_item_empty_edit_text))
-            DB_ITEM_Type -> ToDoItemViewHolder(parent.inflateLayout(R.layout.list_item_to_do))
+            EMPTY_ITEM_TYPE ->
+                EmptyEditTextViewHolder(
+                    parent.inflateLayout(R.layout.list_item_empty_edit_text),
+                    interaction
+                )
+            DB_ITEM_Type ->
+                ToDoItemViewHolder(
+                    parent.inflateLayout(R.layout.list_item_to_do))
             else -> throw IllegalArgumentException("There is no view type $viewType")
         }
     }
@@ -30,7 +40,7 @@ class ToDoAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is EmptyEditTextViewHolder -> holder.bindView(interaction)
+            is EmptyEditTextViewHolder -> holder.bindView()
             is ToDoItemViewHolder -> holder.bindView(items[position] as ToDoItem)
         }
     }
@@ -90,17 +100,40 @@ class ToDoAdapter(
                 override fun swipedToRight() = toggleDone(adapterPosition)
             }
             itemView.todoTV.showStrikeThrough(item.done)
+            itemView.todoTV.makeLSlightlyTransparent(item.done)
+            itemView.doneIV.setDoneNotDoneIcon(item.done)
+        }
+
+        private fun ImageView.setDoneNotDoneIcon(done: Boolean) {
+            if (done) setImageResource(R.drawable.ic_not_done)
+            else setImageResource(R.drawable.ic_done)
         }
     }
 
-    private inner class EmptyEditTextViewHolder(itemView: View) :
+    private inner class EmptyEditTextViewHolder(
+        itemView: View,
+        private val interaction: Interaction
+    ) :
         RecyclerView.ViewHolder(itemView) {
-        fun bindView(interaction: Interaction) {
+        fun bindView() {
             itemView.saveBtn.setOnClickListener {
-                val todoItemText = itemView.todoEditText.text.toString()
-                interaction.createNewToDoItem(todoItemText)
+                createNewTodoItem()
+            }
+            itemView.todoEditText.setOnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    createNewTodoItem()
+                    v.hideKeyboard()
+                    return@setOnEditorActionListener true
+                }
+                return@setOnEditorActionListener false
             }
         }
+
+        private fun createNewTodoItem() {
+            val todoItemText = itemView.todoEditText.text.toString()
+            interaction.createNewToDoItem(todoItemText)
+        }
+
     }
 
     interface Interaction {
