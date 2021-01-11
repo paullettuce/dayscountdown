@@ -76,11 +76,11 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
     }
 
     override fun markAsDone(item: ToDoItem) {
-
+        Toast.makeText(context, "done", Toast.LENGTH_SHORT).show()
     }
 
     override fun delete(item: ToDoItem) {
-
+        Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show()
     }
 
     override fun showTimeLeftString(timeLeftString: String) {

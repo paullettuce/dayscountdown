@@ -15,13 +15,13 @@ class ToDoAdapter(
     private val interaction: Interaction,
     private var items: MutableList<Any> = mutableListOf()
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val EMPTY_ITEM = 0
-    val DB_ITEM = 1
+    private val EMPTY_ITEM_TYPE = 0
+    private val DB_ITEM_Type = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            EMPTY_ITEM -> EmptyEditTextViewHolder(parent.inflateLayout(R.layout.list_item_empty_edit_text))
-            DB_ITEM -> ToDoItemViewHolder(parent.inflateLayout(R.layout.list_item_to_do))
+            EMPTY_ITEM_TYPE -> EmptyEditTextViewHolder(parent.inflateLayout(R.layout.list_item_empty_edit_text))
+            DB_ITEM_Type -> ToDoItemViewHolder(parent.inflateLayout(R.layout.list_item_to_do))
             else -> throw IllegalArgumentException("There is no view type $viewType")
         }
     }
@@ -37,18 +37,20 @@ class ToDoAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (val item = items[position]) {
-            is EmptyToDoItem -> EMPTY_ITEM
-            is ToDoItem -> DB_ITEM
+            is EmptyToDoItem -> EMPTY_ITEM_TYPE
+            is ToDoItem -> DB_ITEM_Type
             else -> throw IllegalArgumentException("There is no view type for ${item::class} class")
         }
     }
 
     fun insertEmptyItem() {
-        items.add(0, EmptyToDoItem())
-        notifyItemInserted(0)
+        if (!hasHeaderItem()) {
+            items.add(0, EmptyToDoItem())
+            notifyItemInserted(0)
+        }
     }
 
-    fun setItems(items: List<Any>) {
+    fun setItems(items: List<ToDoItem>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
@@ -65,10 +67,7 @@ class ToDoAdapter(
         notifyItemChanged(indexOf)
     }
 
-    private fun replaceAtPositionWith(position: Int, toDoItem: ToDoItem) {
-        items[position] = toDoItem
-        notifyItemChanged(position)
-    }
+    private fun hasHeaderItem() = items[0] is EmptyToDoItem
 
     private inner class ToDoItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(item: ToDoItem) {
@@ -92,7 +91,6 @@ class ToDoAdapter(
         fun bindView(interaction: Interaction) {
             itemView.saveBtn.setOnClickListener {
                 val todoItemText = itemView.todoEditText.text.toString()
-                replaceAtPositionWith(adapterPosition, ToDoItem(todoItemText, true))
                 interaction.createNewToDoItem(todoItemText)
             }
         }
