@@ -7,6 +7,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_empty_edit_text.view.*
 import kotlinx.android.synthetic.main.list_item_to_do.view.*
+import pl.paullettuce.SwipeLayout
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.commons.extensions.inflateLayout
 import pl.paullettuce.dayscountdown.data.ToDoItem
@@ -19,12 +20,9 @@ class ToDoAdapter(
     val DB_ITEM = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val lp = RecyclerView.LayoutParams(
-            parent.layoutParams.width,
-            parent.context.resources.getDimensionPixelSize(R.dimen.list_item_height))
         return when (viewType) {
-            EMPTY_ITEM -> EmptyEditTextViewHolder(parent.inflateLayout(R.layout.list_item_empty_edit_text, lp))
-            DB_ITEM -> ToDoItemViewHolder(parent.inflateLayout(R.layout.list_item_to_do, lp))
+            EMPTY_ITEM -> EmptyEditTextViewHolder(parent.inflateLayout(R.layout.list_item_empty_edit_text))
+            DB_ITEM -> ToDoItemViewHolder(parent.inflateLayout(R.layout.list_item_to_do))
             else -> throw IllegalArgumentException("There is no view type $viewType")
         }
     }
@@ -57,6 +55,16 @@ class ToDoAdapter(
         notifyDataSetChanged()
     }
 
+    fun delete(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun markAsDone(position: Int) {
+        (items[position] as? ToDoItem)?.done = true
+        notifyItemChanged(position)
+    }
+
     private fun replaceAtPositionWith(position: Int, toDoItem: ToDoItem) {
         items[position] = toDoItem
         notifyItemChanged(position)
@@ -65,8 +73,15 @@ class ToDoAdapter(
     private inner class ToDoItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(item: ToDoItem) {
             itemView.todoTV.text = item.text
-            // on swipe to right markasdone
-            // on swipe to left delete
+            itemView.swipeLayout.swipeListener = object : SwipeLayout.SwipeListener {
+                override fun swipedToLeft() {
+                    delete(adapterPosition)
+                }
+
+                override fun swipedToRight() {
+                    markAsDone(adapterPosition)
+                }
+            }
             if (item.done) itemView.setBackgroundColor(itemView.context.getColor(R.color.inactiveTextColor))
             else itemView.background = null
         }

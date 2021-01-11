@@ -6,10 +6,5 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 
 fun ViewGroup.inflateLayout(
-    @LayoutRes layoutRes: Int,
-    layoutParams: ViewGroup.LayoutParams
-): View {
-    val view = LayoutInflater.from(this.context).inflate(layoutRes, this, false)
-    view.layoutParams = layoutParams
-    return view
-}
+    @LayoutRes layoutRes: Int
+) = LayoutInflater.from(this.context).inflate(layoutRes, this, false)
