@@ -29,6 +29,8 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
 
     @Inject
     lateinit var timeUnitsSpinnerAdapter: TimeUnitPluralizingListAdapter
+
+    @Inject
     lateinit var thingsToDoAdapter: ToDoAdapter
 
     override fun showMsg(msg: String) {
@@ -107,7 +109,6 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
 //    }
 
     private fun setupRecyclerView() {
-        thingsToDoAdapter = ToDoAdapter(this)
         thingsToDoRV.layoutManager = LinearLayoutManager(this.context)
         thingsToDoRV.adapter = thingsToDoAdapter
         thingsToDoRV.addItemDecoration(

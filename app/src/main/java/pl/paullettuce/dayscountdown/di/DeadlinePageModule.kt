@@ -16,6 +16,7 @@ import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCaseImpl
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageContract
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePagePresenter
+import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
 import pl.paullettuce.dayscountdown.storage.AppDatabase
 import pl.paullettuce.dayscountdown.storage.dao.TodoItemsDao
 import pl.paullettuce.dayscountdown.storage.repo.TodoItemsRepositoryImpl
@@ -53,6 +54,11 @@ object DeadlinePageFragmentModule {
     ): Context {
         return fragment.requireContext()
     }
+
+    @Provides
+    fun provideTodoItemsAdapter(
+        fragment: DeadlinePageFragment
+    ): ToDoAdapter = ToDoAdapter(fragment)
 
     @Provides
     fun providePluralizingAdapter(
