@@ -13,7 +13,7 @@ import pl.paullettuce.dayscountdown.commons.extensions.hideKeyboard
 import pl.paullettuce.dayscountdown.commons.extensions.inflateLayout
 import pl.paullettuce.dayscountdown.commons.extensions.makeLSlightlyTransparent
 import pl.paullettuce.dayscountdown.commons.extensions.showStrikeThrough
-import pl.paullettuce.dayscountdown.storage.entity.ToDoItem
+import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 
 class ToDoAdapter(
     private val interaction: Interaction,
@@ -30,7 +30,7 @@ class ToDoAdapter(
                     interaction
                 )
             DB_ITEM_Type ->
-                ToDoItemViewHolder(
+                TodoItemViewHolder(
                     parent.inflateLayout(R.layout.list_item_to_do))
             else -> throw IllegalArgumentException("There is no view type $viewType")
         }
@@ -41,14 +41,14 @@ class ToDoAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EmptyEditTextViewHolder -> holder.bindView()
-            is ToDoItemViewHolder -> holder.bindView(items[position] as ToDoItem)
+            is TodoItemViewHolder -> holder.bindView(items[position] as TodoItem)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (val item = items[position]) {
-            is EmptyToDoItem -> EMPTY_ITEM_TYPE
-            is ToDoItem -> DB_ITEM_Type
+            is EmptyTodoItem -> EMPTY_ITEM_TYPE
+            is TodoItem -> DB_ITEM_Type
             else -> throw IllegalArgumentException("There is no view type for ${item::class} class")
         }
     }
@@ -58,27 +58,27 @@ class ToDoAdapter(
      */
     fun insertEmptyItem(): Boolean {
         if (!hasHeaderItem()) {
-            items.add(0, EmptyToDoItem())
+            items.add(0, EmptyTodoItem())
             notifyItemInserted(0)
             return true
         }
         return false
     }
 
-    fun setItems(items: List<ToDoItem>) {
+    fun setItems(items: List<TodoItem>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
     }
 
     private fun delete(position: Int) {
-        interaction.delete(items[position] as ToDoItem)
+        interaction.delete(items[position] as TodoItem)
         items.removeAt(position)
         notifyItemRemoved(position)
     }
 
     private fun toggleDone(indexOf: Int) {
-        val item = items[indexOf] as ToDoItem
+        val item = items[indexOf] as TodoItem
         if (item.done) {
             interaction.markAsNotDone(item)
             item.done = false
@@ -96,10 +96,10 @@ class ToDoAdapter(
         }
     }
 
-    private fun hasHeaderItem() = items.isNotEmpty() && items[0] is EmptyToDoItem
+    private fun hasHeaderItem() = items.isNotEmpty() && items[0] is EmptyTodoItem
 
-    private inner class ToDoItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(item: ToDoItem) {
+    private inner class TodoItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bindView(item: TodoItem) {
             itemView.todoTV.text = item.text
             itemView.swipeLayout.reset()
             itemView.swipeLayout.swipeListener = object : SwipeLayout.SwipeListener {
@@ -151,12 +151,12 @@ class ToDoAdapter(
 
     interface Interaction {
         fun saveTodoItem(text: String)
-        fun markAsDone(item: ToDoItem)
-        fun markAsNotDone(item: ToDoItem)
-        fun delete(item: ToDoItem)
+        fun markAsDone(item: TodoItem)
+        fun markAsNotDone(item: TodoItem)
+        fun delete(item: TodoItem)
     }
 }
 
-class EmptyToDoItem {
+class EmptyTodoItem {
 
 }

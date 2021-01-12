@@ -1,21 +1,23 @@
 package pl.paullettuce.dayscountdown.storage.dao
 
 import androidx.room.*
-import pl.paullettuce.dayscountdown.storage.entity.ToDoItem
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 
 @Dao
 interface TodoItemsDao {
 
     @Query("SELECT * FROM todoitem")
-    fun getAll(): List<ToDoItem>
+    fun getAll(): Single<List<TodoItem>>
 
     @Insert
-    fun insert(toDoItem: ToDoItem)
+    fun insert(todoItem: TodoItem): Completable
 
     @Delete
-    fun delete(toDoItem: ToDoItem)
+    fun delete(todoItem: TodoItem)
 
-    @Query("UPDATE todoitem SET done =:done WHERE id=:toDoItemId")
-    fun markAsDone(toDoItemId: Int, done: Boolean)
+    @Query("UPDATE todoitem SET done =:done WHERE id=:todoItemId")
+    fun markAsDone(todoItemId: Int, done: Boolean)
 
 }

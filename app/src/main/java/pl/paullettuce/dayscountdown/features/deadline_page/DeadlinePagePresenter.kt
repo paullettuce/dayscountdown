@@ -13,7 +13,7 @@ import pl.paullettuce.dayscountdown.domain.usecase.GetTodoItemsUseCase
 import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCase
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManager
 import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
-import pl.paullettuce.dayscountdown.storage.entity.ToDoItem
+import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 import pl.paullettuce.dayscountdown.storage.repo.TodoItemsRepositoryImpl
 import pl.paullettuce.dayscountdown.view.adapters.TimeLeftStringBuilder
 import java.util.concurrent.TimeUnit
@@ -63,15 +63,15 @@ class DeadlinePagePresenter
             }.addTo(compositeDisposable)
     }
 
-    override fun markAsDone(toDoItem: ToDoItem) {
+    override fun markAsDone(todoItem: TodoItem) {
         TODO("Not yet implemented")
     }
 
-    override fun markAsNotDone(toDoItem: ToDoItem) {
+    override fun markAsNotDone(todoItem: TodoItem) {
         TODO("Not yet implemented")
     }
 
-    override fun deleteTodoItem(toDoItem: ToDoItem) {
+    override fun deleteTodoItem(todoItem: TodoItem) {
         TODO("Not yet implemented")
     }
 
@@ -100,9 +100,10 @@ class DeadlinePagePresenter
     }
 
     private fun fetchThingsToDo() {
-        //somescope {
-        // val items = todoItemsRepository.fetchItems()
-        //}
+        getTodoItemsUseCase()
+            .subscribeBy {
+                view.showThingsToDo(it)
+            }.addTo(compositeDisposable)
     }
 
     private fun showDeadlineDate() {

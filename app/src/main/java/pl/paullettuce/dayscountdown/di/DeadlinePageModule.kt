@@ -2,6 +2,7 @@ package pl.paullettuce.dayscountdown.di
 
 import android.content.Context
 import androidx.fragment.app.Fragment
+import androidx.room.Room
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -15,6 +16,8 @@ import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCaseImpl
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageContract
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePagePresenter
+import pl.paullettuce.dayscountdown.storage.AppDatabase
+import pl.paullettuce.dayscountdown.storage.dao.TodoItemsDao
 import pl.paullettuce.dayscountdown.storage.repo.TodoItemsRepositoryImpl
 import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingListAdapter
 import pl.paullettuce.dayscountdown.view.adapters.Separator
@@ -70,21 +73,4 @@ object DeadlinePageFragmentModule {
             unitsSeparator = Separator.NewLine()
         )
     }
-
-    @Provides
-    fun provideTodoItemsRepo(
-
-    ): TodoItemsRepository {
-        return TodoItemsRepositoryImpl()
-    }
-
-    @Provides
-    fun provideGetTodoItemsUseCase(
-        todoItemsRepository: TodoItemsRepository
-    ): GetTodoItemsUseCase = GetTodoItemsUseCaseImpl(todoItemsRepository)
-
-    @Provides
-    fun provideSaveTodoItemUseCase(
-        todoItemsRepository: TodoItemsRepository
-    ): SaveTodoItemUseCase = SaveTodoItemUseCaseImpl(todoItemsRepository)
 }

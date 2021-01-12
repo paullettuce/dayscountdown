@@ -1,7 +1,7 @@
 package pl.paullettuce.dayscountdown.features.deadline_page
 
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
-import pl.paullettuce.dayscountdown.storage.entity.ToDoItem
+import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
 
 interface DeadlinePageContract {
@@ -10,7 +10,7 @@ interface DeadlinePageContract {
         fun showTimeLeftString(timeLeftString: String)
         fun showReminderIntervalValue(intervalValue: Int)
         fun showReminderTimeUnits(units: List<TimeUnitToPluralRes>, selectItemIndex: Int)
-        fun showThingsToDo(items: List<ToDoItem>)
+        fun showThingsToDo(items: List<TodoItem>)
 
         fun openDeadlineDateTimePicker(initialPickerDatetimeMillis: Long)
 
@@ -25,10 +25,10 @@ interface DeadlinePageContract {
         fun saveReminderRepeatInterval(reminderRepeatInterval: ReminderRepeatInterval)
         fun toggleNotifications(enableNotifications: Boolean, timestamp: Long)
 
-        //ToDoItems
+        //TodoItems
         fun saveTodoItem(todoText: String)
-        fun markAsDone(toDoItem: ToDoItem)
-        fun markAsNotDone(toDoItem: ToDoItem)
-        fun deleteTodoItem(toDoItem: ToDoItem)
+        fun markAsDone(todoItem: TodoItem)
+        fun markAsNotDone(todoItem: TodoItem)
+        fun deleteTodoItem(todoItem: TodoItem)
     }
 }

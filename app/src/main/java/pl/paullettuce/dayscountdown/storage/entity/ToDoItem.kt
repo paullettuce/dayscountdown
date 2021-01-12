@@ -3,9 +3,10 @@ package pl.paullettuce.dayscountdown.storage.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
-class ToDoItem(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+@Entity(tableName = "todoitem")
+class TodoItem(
     val text: String,
     var done: Boolean = false
-)
+) {
+    @PrimaryKey(autoGenerate = true) var id: Long = 0
+}

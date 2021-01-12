@@ -1,9 +1,10 @@
 package pl.paullettuce.dayscountdown.domain.repository
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import pl.paullettuce.dayscountdown.storage.entity.ToDoItem
+import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 
 interface TodoItemsRepository {
-    fun getTodoItems(): Single<Result<List<ToDoItem>>>
-    fun saveTodoItem(todoItemText: String): Single<Result<ToDoItem>>
+    fun getTodoItems(): Single<List<TodoItem>>
+    fun saveTodoItem(todoItemText: String): Completable
 }

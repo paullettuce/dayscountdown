@@ -13,7 +13,7 @@ import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MAX_VALUE
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MIN_VALUE
 import pl.paullettuce.dayscountdown.commons.RecyclerViewMargin
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
-import pl.paullettuce.dayscountdown.storage.entity.ToDoItem
+import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
 import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingListAdapter
 import pl.paullettuce.dayscountdown.view.DateTimePicker
@@ -72,7 +72,7 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         reminderIntervalTimeUnitSpinner.setSelection(selectItemIndex)
     }
 
-    override fun showThingsToDo(items: List<ToDoItem>) {
+    override fun showThingsToDo(items: List<TodoItem>) {
         (thingsToDoRV.adapter as ToDoAdapter).setItems(items)
     }
 
@@ -80,15 +80,15 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         presenter.saveTodoItem(text)
     }
 
-    override fun markAsDone(item: ToDoItem) {
+    override fun markAsDone(item: TodoItem) {
         presenter.markAsDone(item)
     }
 
-    override fun markAsNotDone(item: ToDoItem) {
+    override fun markAsNotDone(item: TodoItem) {
         presenter.markAsNotDone(item)
     }
 
-    override fun delete(item: ToDoItem) {
+    override fun delete(item: TodoItem) {
         presenter.deleteTodoItem(item)
     }
 
@@ -127,7 +127,7 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         reminderCheckbox.setOnCheckedChangeListener { _, isChecked ->
             presenter.toggleNotifications(isChecked, 1L)
         }
-        addToDoItemBtn.setOnClickListener {
+        addTodoItemBtn.setOnClickListener {
             val alreadyHadEmptyItem = !thingsToDoAdapter.insertEmptyItem()
             if (alreadyHadEmptyItem) scrollToTodoListStart()
         }
