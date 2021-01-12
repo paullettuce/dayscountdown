@@ -7,9 +7,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
+import pl.paullettuce.dayscountdown.domain.repository.TodoItemsRepository
+import pl.paullettuce.dayscountdown.domain.usecase.GetTodoItemsUseCase
+import pl.paullettuce.dayscountdown.domain.usecase.GetTodoItemsUseCaseImpl
+import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCase
+import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCaseImpl
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageContract
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePagePresenter
+import pl.paullettuce.dayscountdown.storage.repo.TodoItemsRepositoryImpl
 import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingListAdapter
 import pl.paullettuce.dayscountdown.view.adapters.Separator
 import pl.paullettuce.dayscountdown.view.adapters.TimeLeftStringBuilder
@@ -64,4 +70,21 @@ object DeadlinePageFragmentModule {
             unitsSeparator = Separator.NewLine()
         )
     }
+
+    @Provides
+    fun provideTodoItemsRepo(
+
+    ): TodoItemsRepository {
+        return TodoItemsRepositoryImpl()
+    }
+
+    @Provides
+    fun provideGetTodoItemsUseCase(
+        todoItemsRepository: TodoItemsRepository
+    ): GetTodoItemsUseCase = GetTodoItemsUseCaseImpl(todoItemsRepository)
+
+    @Provides
+    fun provideSaveTodoItemUseCase(
+        todoItemsRepository: TodoItemsRepository
+    ): SaveTodoItemUseCase = SaveTodoItemUseCaseImpl(todoItemsRepository)
 }

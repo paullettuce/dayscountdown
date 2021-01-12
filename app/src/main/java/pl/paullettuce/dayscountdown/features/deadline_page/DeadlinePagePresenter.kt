@@ -1,13 +1,20 @@
 package pl.paullettuce.dayscountdown.features.deadline_page
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.commons.TimeFormatter
 import pl.paullettuce.dayscountdown.commons.TimeUtil
 import pl.paullettuce.dayscountdown.data.Deadline
 import pl.paullettuce.dayscountdown.data.TimeLeft
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
+import pl.paullettuce.dayscountdown.domain.usecase.GetTodoItemsUseCase
+import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCase
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManager
 import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.storage.entity.ToDoItem
+import pl.paullettuce.dayscountdown.storage.repo.TodoItemsRepositoryImpl
 import pl.paullettuce.dayscountdown.view.adapters.TimeLeftStringBuilder
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -16,8 +23,11 @@ class DeadlinePagePresenter
 @Inject constructor(
     private val view: DeadlinePageContract.View,
     private val notificationManager: AppNotificationManager,
-    private val timeLeftStringBuilder: TimeLeftStringBuilder
+    private val timeLeftStringBuilder: TimeLeftStringBuilder,
+    private val getTodoItemsUseCase: GetTodoItemsUseCase,
+    private val saveTodoItemUseCase: SaveTodoItemUseCase
 ) : DeadlinePageContract.Presenter {
+    private val compositeDisposable = CompositeDisposable()
     private val deadline = Deadline()
     private val reminderTimeUnits = listOf(
         TimeUnitToPluralRes(TimeUnit.DAYS, R.plurals.days),
@@ -28,9 +38,7 @@ class DeadlinePagePresenter
         showDeadlineDate()
         showDaysLeft()
         showReminderInterval()
-
-        // TODO: 15.11.2020 use data from db
-        view.showThingsToDo(emptyList())
+        fetchThingsToDo()
     }
 
     override fun openDeadlineDatetimePicker() {
@@ -47,6 +55,27 @@ class DeadlinePagePresenter
         showDaysLeft()
     }
 
+    //TodoItems section
+    override fun saveTodoItem(todoText: String) {
+        saveTodoItemUseCase(todoText)
+            .subscribeBy {
+                view.showMsg("item added to db")
+            }.addTo(compositeDisposable)
+    }
+
+    override fun markAsDone(toDoItem: ToDoItem) {
+        TODO("Not yet implemented")
+    }
+
+    override fun markAsNotDone(toDoItem: ToDoItem) {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteTodoItem(toDoItem: ToDoItem) {
+        TODO("Not yet implemented")
+    }
+
+    //Notifications section
     override fun saveReminderRepeatInterval(reminderRepeatInterval: ReminderRepeatInterval) {
         deadline.setReminderRepeatInterval(reminderRepeatInterval)
     }
@@ -60,11 +89,20 @@ class DeadlinePagePresenter
     }
 
     private fun scheduleNotifications() {
-        notificationManager.scheduleReminders(deadline.getId(), deadline.getReminderRepeatInterval())
+        notificationManager.scheduleReminders(
+            deadline.getId(),
+            deadline.getReminderRepeatInterval()
+        )
     }
 
     private fun disableNotifications() {
         notificationManager.disableReminders(deadline.getId())
+    }
+
+    private fun fetchThingsToDo() {
+        //somescope {
+        // val items = todoItemsRepository.fetchItems()
+        //}
     }
 
     private fun showDeadlineDate() {

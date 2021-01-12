@@ -89,14 +89,14 @@ class ToDoAdapter(
         notifyItemChanged(indexOf)
     }
 
-    private fun hasHeaderItem() = items[0] is EmptyToDoItem
-
     private fun deleteHeaderItem() {
         if (hasHeaderItem()) {
             items.removeAt(0)
             notifyItemRemoved(0)
         }
     }
+
+    private fun hasHeaderItem() = items.isNotEmpty() && items[0] is EmptyToDoItem
 
     private inner class ToDoItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(item: ToDoItem) {
@@ -124,11 +124,11 @@ class ToDoAdapter(
         RecyclerView.ViewHolder(itemView) {
         fun bindView() {
             itemView.saveBtn.setOnClickListener {
-                createNewTodoItem()
+                saveTodoItem()
             }
             itemView.todoEditText.setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    createNewTodoItem()
+                    saveTodoItem()
                     v.hideKeyboard()
                     return@setOnEditorActionListener true
                 }
@@ -142,15 +142,15 @@ class ToDoAdapter(
             }
         }
 
-        private fun createNewTodoItem() {
+        private fun saveTodoItem() {
             val todoItemText = itemView.todoEditText.text.toString()
-            interaction.createNewToDoItem(todoItemText)
+            interaction.saveTodoItem(todoItemText)
         }
 
     }
 
     interface Interaction {
-        fun createNewToDoItem(text: String)
+        fun saveTodoItem(text: String)
         fun markAsDone(item: ToDoItem)
         fun markAsNotDone(item: ToDoItem)
         fun delete(item: ToDoItem)

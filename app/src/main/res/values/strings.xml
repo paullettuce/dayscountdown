@@ -28,8 +28,8 @@
     <string name="mock_picked_time">8:00</string>
     <string name="save">SAVE</string>
     <string-array name="mock_things_to_do">
-        <item>add room db for todos, deadline, notificaiton</item>
         <item>use usecases</item>
+        <item>add room db for todos, deadline, notificaiton</item>
         <item>reorganize packages accordingly to layers(presentation, storage, domain)</item>
         <item>figure out what to do when deadline time has passed</item>
         <item>add time ticking function</item>

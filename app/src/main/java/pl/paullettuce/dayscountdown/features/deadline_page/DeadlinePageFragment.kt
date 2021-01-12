@@ -31,6 +31,12 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
     lateinit var timeUnitsSpinnerAdapter: TimeUnitPluralizingListAdapter
     lateinit var thingsToDoAdapter: ToDoAdapter
 
+    override fun showMsg(msg: String) {
+        activity?.runOnUiThread {
+            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
@@ -66,29 +72,24 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         reminderIntervalTimeUnitSpinner.setSelection(selectItemIndex)
     }
 
-    override fun showThingsToDo(list: List<ToDoItem>) {
-        val todolist = resources.getStringArray(R.array.mock_things_to_do).map {
-            ToDoItem(
-                it
-            )
-        }
-        (thingsToDoRV.adapter as ToDoAdapter).setItems(todolist)
+    override fun showThingsToDo(items: List<ToDoItem>) {
+        (thingsToDoRV.adapter as ToDoAdapter).setItems(items)
     }
 
-    override fun createNewToDoItem(text: String) {
-        Toast.makeText(context, "addItem: $text", Toast.LENGTH_SHORT).show()
+    override fun saveTodoItem(text: String) {
+        presenter.saveTodoItem(text)
     }
 
     override fun markAsDone(item: ToDoItem) {
-        Toast.makeText(context, "done", Toast.LENGTH_SHORT).show()
+        presenter.markAsDone(item)
     }
 
     override fun markAsNotDone(item: ToDoItem) {
-        Toast.makeText(context, "not done", Toast.LENGTH_SHORT).show()
+        presenter.markAsNotDone(item)
     }
 
     override fun delete(item: ToDoItem) {
-        Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show()
+        presenter.deleteTodoItem(item)
     }
 
     override fun showTimeLeftString(timeLeftString: String) {

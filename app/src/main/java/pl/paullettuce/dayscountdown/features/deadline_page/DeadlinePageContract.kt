@@ -10,9 +10,12 @@ interface DeadlinePageContract {
         fun showTimeLeftString(timeLeftString: String)
         fun showReminderIntervalValue(intervalValue: Int)
         fun showReminderTimeUnits(units: List<TimeUnitToPluralRes>, selectItemIndex: Int)
-        fun showThingsToDo(list: List<ToDoItem>)
+        fun showThingsToDo(items: List<ToDoItem>)
 
         fun openDeadlineDateTimePicker(initialPickerDatetimeMillis: Long)
+
+        //debug only
+        fun showMsg(msg: String)
     }
 
     interface Presenter {
@@ -21,5 +24,11 @@ interface DeadlinePageContract {
         fun saveDeadlineDatetime(datetimeMillis: Long)
         fun saveReminderRepeatInterval(reminderRepeatInterval: ReminderRepeatInterval)
         fun toggleNotifications(enableNotifications: Boolean, timestamp: Long)
+
+        //ToDoItems
+        fun saveTodoItem(todoText: String)
+        fun markAsDone(toDoItem: ToDoItem)
+        fun markAsNotDone(toDoItem: ToDoItem)
+        fun deleteTodoItem(toDoItem: ToDoItem)
     }
 }
