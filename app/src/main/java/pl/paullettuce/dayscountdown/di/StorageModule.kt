@@ -16,11 +16,13 @@ import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCaseImpl
 import pl.paullettuce.dayscountdown.storage.AppDatabase
 import pl.paullettuce.dayscountdown.storage.dao.TodoItemsDao
 import pl.paullettuce.dayscountdown.storage.repo.TodoItemsRepositoryImpl
+import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module
 object StorageModule {
     @Provides
+    @Singleton
     fun provideDatabase(
         @ApplicationContext applicationContext: Context
     ): AppDatabase {
@@ -31,11 +33,13 @@ object StorageModule {
     }
 
     @Provides
+    @Singleton
     fun provideTodoItemsDao(
         db: AppDatabase
     ): TodoItemsDao = db.todoItemsDao()
 
     @Provides
+    @Singleton
     fun provideTodoItemsRepo(
         todoItemsDao: TodoItemsDao,
         itemsMapper: TodoItemDbToListItemListMapper

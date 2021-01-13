@@ -11,15 +11,18 @@ import pl.paullettuce.dayscountdown.domain.usecase.GetTodoListItemsUseCase
 import pl.paullettuce.dayscountdown.domain.usecase.GetTodoListItemsUseCaseImpl
 import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCase
 import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCaseImpl
+import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module
 object DomainModule {
 
     @Provides
+    @Singleton
     fun provideTodoItemDbToListItemMapper() = TodoItemDbToListItemMapper()
 
     @Provides
+    @Singleton
     fun provideTodoItemDbToListItemListMapper(
         itemMapper: TodoItemDbToListItemMapper
     ) = TodoItemDbToListItemListMapper(itemMapper)

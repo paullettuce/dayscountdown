@@ -43,13 +43,12 @@ class NewTodoItemViewHolder(
 ) : ViewHolder(itemView) {
 
     override fun onBindViewHolder(viewTypedListItem: ViewTypedListItem) {
-        itemView.saveBtn.setOnClickListener {
-            saveTodoItem()
+        itemView.saveBtn.setOnClickListener { v ->
+            saveTodoItem(v)
         }
         itemView.todoEditText.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                saveTodoItem()
-                v.hideKeyboard()
+                saveTodoItem(v)
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
@@ -62,8 +61,10 @@ class NewTodoItemViewHolder(
 //        }
     }
 
-    private fun saveTodoItem() {
+    private fun saveTodoItem(view: View) {
+        view.hideKeyboard()
         val todoItemText = itemView.todoEditText.text.toString()
+        itemView.todoEditText.text?.clear()
         interaction.saveTodoItem(todoItemText)
     }
 

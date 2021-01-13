@@ -11,6 +11,7 @@ import pl.paullettuce.dayscountdown.domain.model.ViewTypedListItemDiffCallback
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageContract
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePagePresenter
+import pl.paullettuce.dayscountdown.features.to_do_list.NewTodoItemFactory
 import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
 import pl.paullettuce.dayscountdown.presentation.deadlinepage.todolist.NEW_ITEM_VIEW_TYPE
 import pl.paullettuce.dayscountdown.presentation.deadlinepage.todolist.NewItemViewHolderFactory
@@ -56,8 +57,9 @@ object DeadlinePageFragmentModule {
     fun provideTodoItemsAdapter(
         fragment: DeadlinePageFragment,
         viewHolderProvider: ViewHolderProvider,
+        newTodoItemFactory: NewTodoItemFactory,
         diffCallback: ViewTypedListItemDiffCallback
-    ): ToDoAdapter = ToDoAdapter(fragment, viewHolderProvider, diffCallback)
+    ): ToDoAdapter = ToDoAdapter(fragment, viewHolderProvider, newTodoItemFactory, diffCallback)
 
     @Provides
     fun providePluralizingAdapter(
