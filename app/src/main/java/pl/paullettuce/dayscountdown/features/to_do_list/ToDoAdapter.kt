@@ -40,6 +40,14 @@ class ToDoAdapter(
         return false
     }
 
+    fun deleteEmptyItem() {
+        if (hasHeaderItem()) {
+            val items = currentList.toMutableList()
+            items.removeAt(0)
+            submitList(items)
+        }
+    }
+
     private fun hasHeaderItem() =
         currentList.isNotEmpty() && currentList[0].viewTypeId == NEW_ITEM_VIEW_TYPE
 
@@ -69,13 +77,9 @@ class ToDoAdapter(
     }
 
     interface Interaction {
-        fun saveTodoItem(text: String)
+        fun saveTodoAndDeleteEditableItem(text: String)
         fun markAsDone(item: TodoItem)
         fun markAsNotDone(item: TodoItem)
         fun delete(item: TodoItem)
     }
-}
-
-class EmptyTodoItem {
-
 }

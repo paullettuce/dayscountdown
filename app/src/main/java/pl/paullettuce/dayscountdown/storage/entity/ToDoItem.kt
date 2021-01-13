@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "todoitem")
-class TodoItem(
+data class TodoItem(
     val text: String,
     var done: Boolean = false
 ) {

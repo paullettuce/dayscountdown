@@ -79,7 +79,8 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         reminderIntervalTimeUnitSpinner.setSelection(selectItemIndex)
     }
 
-    override fun saveTodoItem(text: String) {
+    override fun saveTodoAndDeleteEditableItem(text: String) {
+        deleteNewTodoItemFromAdapter()
         presenter.saveTodoItem(text)
     }
 
@@ -109,6 +110,15 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
 //        return ReminderRepeatInterval(interval, intervalUnit)
 //    }
 
+    private fun addNewTodoItemToAdapter() {
+        val alreadyHadEmptyItem = !thingsToDoAdapter.insertEmptyItem()
+        if (alreadyHadEmptyItem) scrollToTodoListStart()
+    }
+
+    private fun deleteNewTodoItemFromAdapter() {
+        thingsToDoAdapter.deleteEmptyItem()
+    }
+
     private fun setupRecyclerView() {
         thingsToDoRV.layoutManager = LinearLayoutManager(this.context)
         thingsToDoRV.adapter = thingsToDoAdapter
@@ -130,8 +140,7 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
             presenter.toggleNotifications(isChecked, 1L)
         }
         addTodoItemBtn.setOnClickListener {
-            val alreadyHadEmptyItem = !thingsToDoAdapter.insertEmptyItem()
-            if (alreadyHadEmptyItem) scrollToTodoListStart()
+            addNewTodoItemToAdapter()
         }
     }
 

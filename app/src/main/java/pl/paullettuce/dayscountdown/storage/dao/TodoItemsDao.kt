@@ -9,7 +9,7 @@ import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 @Dao
 interface TodoItemsDao {
 
-    @Query("SELECT * FROM todoitem")
+    @Query("SELECT * FROM todoitem ORDER BY id DESC")
     fun getAll(): LiveData<List<TodoItem>>
 
     @Insert

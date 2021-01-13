@@ -65,7 +65,7 @@ class NewTodoItemViewHolder(
         view.hideKeyboard()
         val todoItemText = itemView.todoEditText.text.toString()
         itemView.todoEditText.text?.clear()
-        interaction.saveTodoItem(todoItemText)
+        interaction.saveTodoAndDeleteEditableItem(todoItemText)
     }
 
 }
