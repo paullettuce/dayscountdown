@@ -2,8 +2,8 @@ package pl.paullettuce.dayscountdown.domain.usecase
 
 import pl.paullettuce.dayscountdown.domain.repository.TodoItemsRepository
 
-class GetTodoItemsUseCaseImpl(
+class GetTodoListItemsUseCaseImpl(
     private val todoItemsRepository: TodoItemsRepository
-): GetTodoItemsUseCase {
+): GetTodoListItemsUseCase {
     override fun invoke() = todoItemsRepository.getTodoItems()
 }

@@ -1,5 +1,6 @@
 package pl.paullettuce.dayscountdown.features.deadline_page
 
+import androidx.lifecycle.LiveData
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -9,12 +10,12 @@ import pl.paullettuce.dayscountdown.commons.TimeUtil
 import pl.paullettuce.dayscountdown.data.Deadline
 import pl.paullettuce.dayscountdown.data.TimeLeft
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
-import pl.paullettuce.dayscountdown.domain.usecase.GetTodoItemsUseCase
+import pl.paullettuce.dayscountdown.domain.model.ViewTypedListItem
+import pl.paullettuce.dayscountdown.domain.usecase.GetTodoListItemsUseCase
 import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCase
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManager
 import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
 import pl.paullettuce.dayscountdown.storage.entity.TodoItem
-import pl.paullettuce.dayscountdown.storage.repo.TodoItemsRepositoryImpl
 import pl.paullettuce.dayscountdown.view.adapters.TimeLeftStringBuilder
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class DeadlinePagePresenter
     private val view: DeadlinePageContract.View,
     private val notificationManager: AppNotificationManager,
     private val timeLeftStringBuilder: TimeLeftStringBuilder,
-    private val getTodoItemsUseCase: GetTodoItemsUseCase,
+    private val getTodoListItemsUseCase: GetTodoListItemsUseCase,
     private val saveTodoItemUseCase: SaveTodoItemUseCase
 ) : DeadlinePageContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
@@ -38,7 +39,6 @@ class DeadlinePagePresenter
         showDeadlineDate()
         showDaysLeft()
         showReminderInterval()
-        fetchThingsToDo()
     }
 
     override fun openDeadlineDatetimePicker() {
@@ -56,6 +56,10 @@ class DeadlinePagePresenter
     }
 
     //TodoItems section
+    override fun observeForTodoListItems(): LiveData<List<ViewTypedListItem>> {
+        return getTodoListItemsUseCase()
+    }
+
     override fun saveTodoItem(todoText: String) {
         saveTodoItemUseCase(todoText)
             .subscribeBy {
@@ -97,13 +101,6 @@ class DeadlinePagePresenter
 
     private fun disableNotifications() {
         notificationManager.disableReminders(deadline.getId())
-    }
-
-    private fun fetchThingsToDo() {
-        getTodoItemsUseCase()
-            .subscribeBy {
-                view.showThingsToDo(it)
-            }.addTo(compositeDisposable)
     }
 
     private fun showDeadlineDate() {

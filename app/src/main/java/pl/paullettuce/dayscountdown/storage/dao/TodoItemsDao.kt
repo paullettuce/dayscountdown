@@ -1,5 +1,6 @@
 package pl.paullettuce.dayscountdown.storage.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -9,7 +10,7 @@ import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 interface TodoItemsDao {
 
     @Query("SELECT * FROM todoitem")
-    fun getAll(): Single<List<TodoItem>>
+    fun getAll(): LiveData<List<TodoItem>>
 
     @Insert
     fun insert(todoItem: TodoItem): Completable

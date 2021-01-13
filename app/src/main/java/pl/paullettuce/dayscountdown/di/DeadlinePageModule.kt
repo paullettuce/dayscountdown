@@ -63,9 +63,7 @@ object DeadlinePageFragmentModule {
     fun providePluralizingAdapter(
         context: Context
     ): TimeUnitPluralizingListAdapter {
-        return TimeUnitPluralizingListAdapter(
-            context
-        )
+        return TimeUnitPluralizingListAdapter(context)
     }
 
     @Provides
@@ -80,12 +78,12 @@ object DeadlinePageFragmentModule {
     }
 
     @Provides
-    fun provideTodoItemViewHolderFactory()
-            = TodoItemViewHolderFactory()
+    fun provideTodoItemViewHolderFactory() = TodoItemViewHolderFactory()
 
     @Provides
-    fun provideNewItemViewHolderFactory(interaction: ToDoAdapter.Interaction)
-            = NewItemViewHolderFactory(interaction)
+    fun provideNewItemViewHolderFactory(
+        fragment: DeadlinePageFragment
+    ) = NewItemViewHolderFactory(fragment)
 
     @Provides
     fun provideViewHolderProvider(

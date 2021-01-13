@@ -13,11 +13,12 @@ import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MAX_VALUE
 import pl.paullettuce.dayscountdown.REMINDER_INTERVAL_MIN_VALUE
 import pl.paullettuce.dayscountdown.commons.RecyclerViewMargin
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
-import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
-import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingListAdapter
+import pl.paullettuce.dayscountdown.presentation.livedata.observe
+import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 import pl.paullettuce.dayscountdown.view.DateTimePicker
 import pl.paullettuce.dayscountdown.view.MinMaxEditText
+import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingListAdapter
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -46,6 +47,10 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         setupReminderTimeUnitsSpinner()
         setListeners()
         presenter.initiate()
+
+        presenter.observeForTodoListItems().observe(this) {
+            thingsToDoAdapter.submitList(it)
+        }
     }
 
     override fun showDeadlineDate(friendlyDatetime: String) {
@@ -72,10 +77,6 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
             addAll(units)
         }
         reminderIntervalTimeUnitSpinner.setSelection(selectItemIndex)
-    }
-
-    override fun showThingsToDo(items: List<TodoItem>) {
-        (thingsToDoRV.adapter as ToDoAdapter).submitList(items)
     }
 
     override fun saveTodoItem(text: String) {
