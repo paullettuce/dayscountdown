@@ -75,7 +75,7 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
     }
 
     override fun showThingsToDo(items: List<TodoItem>) {
-        (thingsToDoRV.adapter as ToDoAdapter).setItems(items)
+        (thingsToDoRV.adapter as ToDoAdapter).submitList(items)
     }
 
     override fun saveTodoItem(text: String) {

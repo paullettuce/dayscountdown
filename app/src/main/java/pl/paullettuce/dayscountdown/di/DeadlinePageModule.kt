@@ -2,24 +2,21 @@ package pl.paullettuce.dayscountdown.di
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import androidx.room.Room
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
-import pl.paullettuce.dayscountdown.domain.repository.TodoItemsRepository
-import pl.paullettuce.dayscountdown.domain.usecase.GetTodoItemsUseCase
-import pl.paullettuce.dayscountdown.domain.usecase.GetTodoItemsUseCaseImpl
-import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCase
-import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCaseImpl
+import pl.paullettuce.dayscountdown.domain.model.ViewTypedListItemDiffCallback
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageContract
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePageFragment
 import pl.paullettuce.dayscountdown.features.deadline_page.DeadlinePagePresenter
 import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
-import pl.paullettuce.dayscountdown.storage.AppDatabase
-import pl.paullettuce.dayscountdown.storage.dao.TodoItemsDao
-import pl.paullettuce.dayscountdown.storage.repo.TodoItemsRepositoryImpl
+import pl.paullettuce.dayscountdown.presentation.deadlinepage.todolist.NEW_ITEM_VIEW_TYPE
+import pl.paullettuce.dayscountdown.presentation.deadlinepage.todolist.NewItemViewHolderFactory
+import pl.paullettuce.dayscountdown.presentation.deadlinepage.todolist.TODO_ITEM_VIEW_TYPE
+import pl.paullettuce.dayscountdown.presentation.deadlinepage.todolist.TodoItemViewHolderFactory
+import pl.paullettuce.dayscountdown.presentation.list_tools.ViewHolderProvider
 import pl.paullettuce.dayscountdown.view.TimeUnitPluralizingListAdapter
 import pl.paullettuce.dayscountdown.view.adapters.Separator
 import pl.paullettuce.dayscountdown.view.adapters.TimeLeftStringBuilder
@@ -57,8 +54,10 @@ object DeadlinePageFragmentModule {
 
     @Provides
     fun provideTodoItemsAdapter(
-        fragment: DeadlinePageFragment
-    ): ToDoAdapter = ToDoAdapter(fragment)
+        fragment: DeadlinePageFragment,
+        viewHolderProvider: ViewHolderProvider,
+        diffCallback: ViewTypedListItemDiffCallback
+    ): ToDoAdapter = ToDoAdapter(fragment, viewHolderProvider, diffCallback)
 
     @Provides
     fun providePluralizingAdapter(
@@ -78,5 +77,24 @@ object DeadlinePageFragmentModule {
             displayedUnitsLimit = 3,
             unitsSeparator = Separator.NewLine()
         )
+    }
+
+    @Provides
+    fun provideTodoItemViewHolderFactory()
+            = TodoItemViewHolderFactory()
+
+    @Provides
+    fun provideNewItemViewHolderFactory(interaction: ToDoAdapter.Interaction)
+            = NewItemViewHolderFactory(interaction)
+
+    @Provides
+    fun provideViewHolderProvider(
+        todoItemViewHolderFactory: TodoItemViewHolderFactory,
+        newItemViewHolderFactory: NewItemViewHolderFactory
+    ): ViewHolderProvider {
+        val viewHolderProvider = ViewHolderProvider()
+        viewHolderProvider.registerViewHolderFactory(TODO_ITEM_VIEW_TYPE, todoItemViewHolderFactory)
+        viewHolderProvider.registerViewHolderFactory(NEW_ITEM_VIEW_TYPE, newItemViewHolderFactory)
+        return viewHolderProvider
     }
 }

@@ -4,15 +4,22 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import pl.paullettuce.dayscountdown.domain.mappers.TodoItemDbToListItemListMapper
+import pl.paullettuce.dayscountdown.domain.mappers.TodoItemDbToListItemMapper
+import pl.paullettuce.dayscountdown.domain.model.ViewTypedListItem
 import pl.paullettuce.dayscountdown.domain.repository.TodoItemsRepository
 import pl.paullettuce.dayscountdown.storage.dao.TodoItemsDao
 import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 
 class TodoItemsRepositoryImpl(
-    private val todoItemsDao: TodoItemsDao
+    private val todoItemsDao: TodoItemsDao,
+    private val dbToListItemListMapper: TodoItemDbToListItemListMapper
 ): TodoItemsRepository {
-    override fun getTodoItems(): Single<List<TodoItem>> {
+    override fun getTodoItems(): Single<List<ViewTypedListItem>> {
         return todoItemsDao.getAll()
+            .map {
+                dbToListItemListMapper.map(it)
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
@@ -22,4 +29,6 @@ class TodoItemsRepositoryImpl(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+
 }
