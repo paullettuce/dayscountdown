@@ -80,12 +80,14 @@ object DeadlinePageFragmentModule {
     }
 
     @Provides
-    fun provideTodoItemViewHolderFactory() = TodoItemViewHolderFactory()
+    fun provideTodoItemViewHolderFactory(
+        interaction: DeadlinePageFragment
+    ) = TodoItemViewHolderFactory(interaction)
 
     @Provides
     fun provideNewItemViewHolderFactory(
-        fragment: DeadlinePageFragment
-    ) = NewItemViewHolderFactory(fragment)
+        interaction: DeadlinePageFragment
+    ) = NewItemViewHolderFactory(interaction)
 
     @Provides
     fun provideViewHolderProvider(

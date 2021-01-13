@@ -9,4 +9,7 @@ import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 interface TodoItemsRepository {
     fun getTodoItems(): LiveData<List<ViewTypedListItem>>
     fun saveTodoItem(todoItemText: String): Completable
+    fun markAsDone(todoItem: TodoItem): Completable
+    fun markAsNotDone(todoItem: TodoItem): Completable
+    fun delete(todoItem: TodoItem): Completable
 }

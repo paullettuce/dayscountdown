@@ -7,10 +7,7 @@ import dagger.hilt.android.components.ApplicationComponent
 import pl.paullettuce.dayscountdown.domain.mappers.TodoItemDbToListItemListMapper
 import pl.paullettuce.dayscountdown.domain.mappers.TodoItemDbToListItemMapper
 import pl.paullettuce.dayscountdown.domain.repository.TodoItemsRepository
-import pl.paullettuce.dayscountdown.domain.usecase.GetTodoListItemsUseCase
-import pl.paullettuce.dayscountdown.domain.usecase.GetTodoListItemsUseCaseImpl
-import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCase
-import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCaseImpl
+import pl.paullettuce.dayscountdown.domain.usecase.*
 import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
@@ -36,5 +33,20 @@ object DomainModule {
     fun provideSaveTodoItemUseCase(
         todoItemsRepository: TodoItemsRepository
     ): SaveTodoItemUseCase = SaveTodoItemUseCaseImpl(todoItemsRepository)
+
+    @Provides
+    fun provideDeleteTodoItemUseCase(
+        todoItemsRepository: TodoItemsRepository
+    ): DeleteTodoItemUseCase = DeleteTodoItemUseCaseImpl(todoItemsRepository)
+
+    @Provides
+    fun provideMarkTodoItemAsDoneUseCase(
+        todoItemsRepository: TodoItemsRepository
+    ): MarkTodoItemAsDoneUseCase = MarkTodoItemAsDoneUseCaseImpl(todoItemsRepository)
+
+    @Provides
+    fun provideMarkTodoItemAsNotDoneUseCase(
+        todoItemsRepository: TodoItemsRepository
+    ): MarkTodoItemAsNotDoneUseCase = MarkTodoItemAsNotDoneUseCaseImpl(todoItemsRepository)
 
 }

@@ -14,13 +14,11 @@ interface DeadlinePageContract {
         fun showReminderTimeUnits(units: List<TimeUnitToPluralRes>, selectItemIndex: Int)
 
         fun openDeadlineDateTimePicker(initialPickerDatetimeMillis: Long)
-
-        //debug only
-        fun showMsg(msg: String)
     }
 
     interface Presenter {
         fun initiate()
+        fun onDestroy()
         fun openDeadlineDatetimePicker()
         fun saveDeadlineDatetime(datetimeMillis: Long)
         fun saveReminderRepeatInterval(reminderRepeatInterval: ReminderRepeatInterval)

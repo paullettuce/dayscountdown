@@ -27,4 +27,22 @@ class TodoItemsRepositoryImpl(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+    override fun markAsDone(todoItem: TodoItem): Completable {
+        return todoItemsDao.markAsDone(todoItem.id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun markAsNotDone(todoItem: TodoItem): Completable {
+        return todoItemsDao.markAsNotDone(todoItem.id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun delete(todoItem: TodoItem): Completable {
+        return todoItemsDao.delete(todoItem)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

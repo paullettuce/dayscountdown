@@ -9,10 +9,6 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import pl.paullettuce.dayscountdown.domain.mappers.TodoItemDbToListItemListMapper
 import pl.paullettuce.dayscountdown.domain.repository.TodoItemsRepository
-import pl.paullettuce.dayscountdown.domain.usecase.GetTodoListItemsUseCase
-import pl.paullettuce.dayscountdown.domain.usecase.GetTodoListItemsUseCaseImpl
-import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCase
-import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCaseImpl
 import pl.paullettuce.dayscountdown.storage.AppDatabase
 import pl.paullettuce.dayscountdown.storage.dao.TodoItemsDao
 import pl.paullettuce.dayscountdown.storage.repo.TodoItemsRepositoryImpl

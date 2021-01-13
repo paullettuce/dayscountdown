@@ -2,7 +2,6 @@ package pl.paullettuce.dayscountdown.features.deadline_page
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,12 +33,6 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
     @Inject
     lateinit var thingsToDoAdapter: ToDoAdapter
 
-    override fun showMsg(msg: String) {
-        activity?.runOnUiThread {
-            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
@@ -51,6 +44,11 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         presenter.observeForTodoListItems().observe(this) {
             thingsToDoAdapter.submitList(it)
         }
+    }
+
+    override fun onDestroy() {
+        presenter.onDestroy()
+        super.onDestroy()
     }
 
     override fun showDeadlineDate(friendlyDatetime: String) {
@@ -79,9 +77,12 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         reminderIntervalTimeUnitSpinner.setSelection(selectItemIndex)
     }
 
-    override fun saveTodoAndDeleteEditableItem(text: String) {
-        deleteNewTodoItemFromAdapter()
+    override fun saveTodo(text: String) {
         presenter.saveTodoItem(text)
+    }
+
+    override fun deleteEditableItem() {
+        deleteNewTodoItemFromAdapter()
     }
 
     override fun markAsDone(item: TodoItem) {

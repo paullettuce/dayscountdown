@@ -4,11 +4,13 @@ import io.reactivex.rxjava3.core.Completable
 import pl.paullettuce.dayscountdown.domain.repository.TodoItemsRepository
 import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 
-inline fun markAsDone(
-    todoItemsRepository: TodoItemsRepository,
-    todoItem: TodoItem
-): Completable {
-    return todoItemsRepository.markAsDone(todoItem)
+
+interface MarkTodoItemAsDoneUseCase {
+    operator fun invoke(todoItem: TodoItem): Completable
 }
 
-typealias MarkAsDoneUseCase = (TodoItem) -> Completable
+class MarkTodoItemAsDoneUseCaseImpl(
+    private val todoItemsRepository: TodoItemsRepository
+): MarkTodoItemAsDoneUseCase {
+    override fun invoke(todoItem: TodoItem) = todoItemsRepository.markAsDone(todoItem)
+}

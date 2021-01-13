@@ -16,9 +16,11 @@ interface TodoItemsDao {
     fun insert(todoItem: TodoItem): Completable
 
     @Delete
-    fun delete(todoItem: TodoItem)
+    fun delete(todoItem: TodoItem): Completable
 
-    @Query("UPDATE todoitem SET done =:done WHERE id=:todoItemId")
-    fun markAsDone(todoItemId: Int, done: Boolean)
+    @Query("UPDATE todoitem SET done = 1 WHERE id=:todoItemId")
+    fun markAsDone(todoItemId: Long): Completable
 
+    @Query("UPDATE todoitem SET done = 0 WHERE id=:todoItemId")
+    fun markAsNotDone(todoItemId: Long): Completable
 }

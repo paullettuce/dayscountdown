@@ -77,7 +77,8 @@ class ToDoAdapter(
     }
 
     interface Interaction {
-        fun saveTodoAndDeleteEditableItem(text: String)
+        fun saveTodo(text: String)
+        fun deleteEditableItem()
         fun markAsDone(item: TodoItem)
         fun markAsNotDone(item: TodoItem)
         fun delete(item: TodoItem)

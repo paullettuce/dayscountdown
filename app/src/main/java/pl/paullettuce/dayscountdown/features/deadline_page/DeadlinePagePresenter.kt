@@ -12,8 +12,7 @@ import pl.paullettuce.dayscountdown.data.Deadline
 import pl.paullettuce.dayscountdown.data.TimeLeft
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.domain.model.ViewTypedListItem
-import pl.paullettuce.dayscountdown.domain.usecase.GetTodoListItemsUseCase
-import pl.paullettuce.dayscountdown.domain.usecase.SaveTodoItemUseCase
+import pl.paullettuce.dayscountdown.domain.usecase.*
 import pl.paullettuce.dayscountdown.notfications.AppNotificationManager
 import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
 import pl.paullettuce.dayscountdown.storage.entity.TodoItem
@@ -27,7 +26,10 @@ class DeadlinePagePresenter
     private val notificationManager: AppNotificationManager,
     private val timeLeftStringBuilder: TimeLeftStringBuilder,
     private val getTodoListItemsUseCase: GetTodoListItemsUseCase,
-    private val saveTodoItemUseCase: SaveTodoItemUseCase
+    private val saveTodoItemUseCase: SaveTodoItemUseCase,
+    private val markTodoItemAsDoneUseCase: MarkTodoItemAsDoneUseCase,
+    private val markTodoItemAsNotDoneUseCase: MarkTodoItemAsNotDoneUseCase,
+    private val deleteTodoItemUseCase: DeleteTodoItemUseCase
 ) : DeadlinePageContract.Presenter {
     private val compositeDisposable = CompositeDisposable()
     private val deadline = Deadline()
@@ -40,6 +42,10 @@ class DeadlinePagePresenter
         showDeadlineDate()
         showDaysLeft()
         showReminderInterval()
+    }
+
+    override fun onDestroy() {
+        compositeDisposable.dispose()
     }
 
     override fun openDeadlineDatetimePicker() {
@@ -63,21 +69,26 @@ class DeadlinePagePresenter
 
     override fun saveTodoItem(todoText: String) {
         saveTodoItemUseCase(todoText)
-            .subscribeBy {
-                view.showMsg("item added to db")
-            }.addTo(compositeDisposable)
+            .subscribe()
+            .addTo(compositeDisposable)
     }
 
     override fun markAsDone(todoItem: TodoItem) {
-        TODO("Not yet implemented")
+        markTodoItemAsDoneUseCase(todoItem)
+            .subscribe()
+            .addTo(compositeDisposable)
     }
 
     override fun markAsNotDone(todoItem: TodoItem) {
-        TODO("Not yet implemented")
+        markTodoItemAsNotDoneUseCase(todoItem)
+            .subscribe()
+            .addTo(compositeDisposable)
     }
 
     override fun deleteTodoItem(todoItem: TodoItem) {
-        TODO("Not yet implemented")
+        deleteTodoItemUseCase(todoItem)
+            .subscribe()
+            .addTo(compositeDisposable)
     }
 
     //Notifications section
