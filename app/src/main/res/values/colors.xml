@@ -15,4 +15,6 @@
     <color name="bg_mark_as_done">#5582A6</color>
     <color name="bg_delete">#910404</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="editTextErrorTint">#BE2217</color>
 </resources>
