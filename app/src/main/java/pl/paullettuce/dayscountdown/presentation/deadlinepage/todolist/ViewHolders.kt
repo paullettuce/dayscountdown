@@ -31,7 +31,7 @@ class TodoItemViewHolder(
                 if (item.done) {
                     interaction.markAsNotDone(item)
                 } else {
-                    interaction.markAsNotDone(item)
+                    interaction.markAsDone(item)
                 }
             }
         }
