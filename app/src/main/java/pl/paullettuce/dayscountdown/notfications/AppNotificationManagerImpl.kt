@@ -8,9 +8,9 @@ import androidx.annotation.RequiresApi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import pl.paullettuce.dayscountdown.R
 import pl.paullettuce.dayscountdown.commons.extensions.logd
-import pl.paullettuce.dayscountdown.data.DeadlineData
+import pl.paullettuce.dayscountdown.storage.entity.DeadlineData
 import pl.paullettuce.dayscountdown.notfications.reminder.ReminderNotification
-import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.storage.entity.ReminderRepeatInterval
 import javax.inject.Inject
 
 const val REMINDER_NOTIFICATIONS_CHANNEL_ID = "320-5430958-0"

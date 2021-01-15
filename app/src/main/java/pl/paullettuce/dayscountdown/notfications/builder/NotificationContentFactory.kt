@@ -2,7 +2,7 @@ package pl.paullettuce.dayscountdown.notfications.builder
 
 import android.content.Context
 import pl.paullettuce.dayscountdown.R
-import pl.paullettuce.dayscountdown.data.DeadlineData
+import pl.paullettuce.dayscountdown.storage.entity.DeadlineData
 import pl.paullettuce.dayscountdown.data.TimeLeft
 import pl.paullettuce.dayscountdown.view.adapters.TimeLeftStringBuilder
 
@@ -26,20 +26,21 @@ class ReminderContentFactory(
         }
     }
 
-    private fun hasBigTextContent() = deadlineData.thingsToDo.isNotEmpty()
-
     private fun oneLineContent(): String {
         return getTimeLeftFormatted()
     }
+
+    private fun hasBigTextContent() = true // TODO: 14.01.2021  deadlineData.thingsToDo.isNotEmpty()
 
     private fun bigTextContent(): String {
         val sb = StringBuilder()
         sb.appendln(getTimeLeftFormatted())
         sb.append(context.getString(R.string.things_to_do)).append(":")
-        deadlineData.thingsToDo.forEachIndexed { index, item ->
-            sb.appendln()
-            sb.append(item.text)
-        }
+        // TODO: 14.01.2021
+//        deadlineData.thingsToDo.forEachIndexed { index, item ->
+//            sb.appendln()
+//            sb.append(item.text)
+//        }
         return sb.toString()
     }
 

@@ -3,7 +3,7 @@ package pl.paullettuce.dayscountdown.notfications
 import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
-import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.storage.entity.ReminderRepeatInterval
 import pl.paullettuce.dayscountdown.notfications.reminder.work.ReminderPeriodicWorkRequest
 
 object NotificationsScheduler {

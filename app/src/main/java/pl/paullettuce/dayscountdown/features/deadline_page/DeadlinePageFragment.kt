@@ -14,6 +14,7 @@ import pl.paullettuce.dayscountdown.commons.RecyclerViewMargin
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
 import pl.paullettuce.dayscountdown.features.to_do_list.ToDoAdapter
 import pl.paullettuce.dayscountdown.presentation.livedata.observe
+import pl.paullettuce.dayscountdown.presentation.livedata.observeNonNull
 import pl.paullettuce.dayscountdown.storage.entity.TodoItem
 import pl.paullettuce.dayscountdown.view.DateTimePicker
 import pl.paullettuce.dayscountdown.view.MinMaxEditText
@@ -39,8 +40,10 @@ class DeadlinePageFragment : Fragment(R.layout.fragment_deadline_page),
         setupReminderIntervalET()
         setupReminderTimeUnitsSpinner()
         setListeners()
-        presenter.initiate()
 
+        presenter.observeForDeadlineInfo().observeNonNull(this) {
+            presenter.dispatchDeadlineInfoLiveDataUpdate(it)
+        }
         presenter.observeForTodoListItems().observe(this) {
             thingsToDoAdapter.submitList(it)
         }

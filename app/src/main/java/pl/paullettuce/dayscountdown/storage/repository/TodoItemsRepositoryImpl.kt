@@ -1,13 +1,11 @@
-package pl.paullettuce.dayscountdown.storage.repo
+package pl.paullettuce.dayscountdown.storage.repository
 
 import androidx.lifecycle.LiveData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import pl.paullettuce.dayscountdown.domain.mappers.TodoItemDbToListItemListMapper
-import pl.paullettuce.dayscountdown.domain.mappers.TodoItemDbToListItemMapper
-import pl.paullettuce.dayscountdown.domain.mappers.map
+import pl.paullettuce.dayscountdown.domain.mappers.mapNotNull
 import pl.paullettuce.dayscountdown.domain.model.ViewTypedListItem
 import pl.paullettuce.dayscountdown.domain.repository.TodoItemsRepository
 import pl.paullettuce.dayscountdown.storage.dao.TodoItemsDao
@@ -19,7 +17,9 @@ class TodoItemsRepositoryImpl(
 ): TodoItemsRepository {
     override fun getTodoItems(): LiveData<List<ViewTypedListItem>> {
         return todoItemsDao.getAll()
-            .map { dbToListItemListMapper.map(it) }
+            .mapNotNull {
+                dbToListItemListMapper.map(it)
+            }
     }
 
     override fun saveTodoItem(todoItemText: String): Completable {

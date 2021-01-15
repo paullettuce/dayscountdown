@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import pl.paullettuce.dayscountdown.R
-import pl.paullettuce.dayscountdown.data.DeadlineData
+import pl.paullettuce.dayscountdown.storage.entity.DeadlineData
 import pl.paullettuce.dayscountdown.notfications.reminder.ReminderNotification
 
 const val DEADLINE_ID_KEY = "DEADLINE_ID_KEY"

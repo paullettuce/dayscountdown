@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationManagerCompat
 import pl.paullettuce.dayscountdown.MainActivity
-import pl.paullettuce.dayscountdown.data.DeadlineData
+import pl.paullettuce.dayscountdown.storage.entity.DeadlineData
 import pl.paullettuce.dayscountdown.notfications.builder.NotificationBuildingDirector
 import pl.paullettuce.dayscountdown.notfications.builder.ReminderContentFactory
 import pl.paullettuce.dayscountdown.notfications.builder.ReminderNotificationParams

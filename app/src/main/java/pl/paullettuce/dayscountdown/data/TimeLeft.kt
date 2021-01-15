@@ -39,5 +39,7 @@ private constructor(private val millisLeft: Long) {
             val millisLeft = TimeUtil.millisToTimestampSinceNow(timestamp)
             return TimeLeft(millisLeft)
         }
+
+        fun empty() = TimeLeft(0)
     }
 }

@@ -1,14 +1,16 @@
 package pl.paullettuce.dayscountdown.data
 
 import pl.paullettuce.dayscountdown.commons.TimeFormatter
-import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.storage.entity.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.storage.entity.DeadlineData
 
 class Deadline {
 
-    private val deadlineData = DeadlineData()
+    private val deadlineData =
+        DeadlineData()
 
     override fun toString(): String {
-        return TimeFormatter.formatMillis(deadlineData.datetimeTimestamp)
+        return TimeFormatter.friendlyFromMillis(deadlineData.datetimeTimestamp)
     }
 
     fun getId() = deadlineData.id

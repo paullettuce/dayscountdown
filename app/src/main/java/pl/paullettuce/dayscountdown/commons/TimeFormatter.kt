@@ -15,7 +15,7 @@ const val TIME_FORMAT ="dd-MM-yyyy HH:mm"
 object TimeFormatter {
     private const val TAG = "TimeFormatter"
 
-    fun formatMillis(datetime: Long): String {
+    fun friendlyFromMillis(datetime: Long): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             formatUsingNewApi(datetime)
         } else {

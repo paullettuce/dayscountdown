@@ -2,9 +2,10 @@ package pl.paullettuce.dayscountdown.features.deadline_page
 
 import androidx.lifecycle.LiveData
 import pl.paullettuce.dayscountdown.data.TimeUnitToPluralRes
+import pl.paullettuce.dayscountdown.domain.model.DeadlineInfo
 import pl.paullettuce.dayscountdown.domain.model.ViewTypedListItem
 import pl.paullettuce.dayscountdown.storage.entity.TodoItem
-import pl.paullettuce.dayscountdown.notfications.reminder.ReminderRepeatInterval
+import pl.paullettuce.dayscountdown.storage.entity.ReminderRepeatInterval
 
 interface DeadlinePageContract {
     interface View {
@@ -17,8 +18,10 @@ interface DeadlinePageContract {
     }
 
     interface Presenter {
-        fun initiate()
         fun onDestroy()
+
+        fun observeForDeadlineInfo(): LiveData<DeadlineInfo>
+        fun dispatchDeadlineInfoLiveDataUpdate(deadlineInfo: DeadlineInfo)
         fun openDeadlineDatetimePicker()
         fun saveDeadlineDatetime(datetimeMillis: Long)
         fun saveReminderRepeatInterval(reminderRepeatInterval: ReminderRepeatInterval)

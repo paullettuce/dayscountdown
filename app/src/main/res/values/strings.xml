@@ -30,8 +30,9 @@
     <string-array name="mock_things_to_do">
         <item>add room db for todos, deadline, notificaiton</item>
         <item>reorganize packages accordingly to layers(presentation, storage, domain)</item>
+        <item>add undo operation for todoitem delete</item>
         <item>figure out what to do when deadline time has passed</item>
-        <item>add time ticking function</item>
+        <item>add time ticking function - listen to system clock</item>
         <item>possibly add animation for minutes passing</item>
         <item>sound in app enabled checkbox, shoosh for minute, gong for hour</item>
         <item>every hour notification with a gong sound</item>
